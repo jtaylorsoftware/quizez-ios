@@ -23,4 +23,13 @@ enum SocketError: Error {
     
     /// Failed to join session
     case joinFailed
+    
+    /// Failed to kick user
+    case kickFailed
+    
+    /// Failed to start session
+    case startSessionFailed
+    
+    /// Failed to end session
+    case endSessionFailed
 }

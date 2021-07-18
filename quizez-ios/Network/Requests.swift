@@ -30,3 +30,24 @@ struct JoinSessionRequest: SocketRequest {
     /// Display name to associate with
     let name: String
 }
+
+/// If socket owns a session, kick a user
+struct KickUserRequest: SocketRequest {
+    /// ID of Session
+    let session: String
+    
+    /// Display name to kick
+    let name: String
+}
+
+/// If socket owns a session, start it
+struct StartSessionRequest: SocketRequest {
+    /// ID of Session
+    let session: String
+}
+
+/// If socket owns a session, end it
+struct EndSessionRequest: SocketRequest {
+    /// ID of Session
+    let session: String
+}

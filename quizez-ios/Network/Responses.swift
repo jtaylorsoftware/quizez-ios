@@ -26,3 +26,57 @@ struct CreatedSession: SocketResponse {
         self.id = id
     }
 }
+
+/// A user has joined the session (the user might be the socket receiving the response)
+struct UserJoined: SocketResponse {
+    /// The ID of the session
+    let session: String
+    
+    /// The name of the user joining
+    let name: String
+
+    init?(json: [String : Any]) {
+        guard let session = json["session"] as? String,
+              let name = json["name"] as? String else {
+            return nil
+        }
+        self.session = session
+        self.name = name
+    }
+}
+
+/// User kicked successfully
+struct KickedUser: SocketResponse {
+    /// The ID of the session
+    let session: String
+    
+    /// The name of the user kicked
+    let name: String
+    
+    init?(json: [String : Any]) {
+        guard let session = json["session"] as? String,
+              let name = json["name"] as? String else {
+            return nil
+        }
+        self.session = session
+        self.name = name
+    }
+}
+
+/// A user has disconnected from the session (reason is not that they were kicked)
+struct UserDisconnected: SocketResponse {
+    /// The ID of the session
+    let session: String
+    
+    /// The name of the user disconnected
+    let name: String
+    
+    init?(json: [String : Any]) {
+        guard let session = json["session"] as? String,
+              let name = json["name"] as? String else {
+            return nil
+        }
+        self.session = session
+        self.name = name
+    }
+}
