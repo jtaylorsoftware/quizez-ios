@@ -51,7 +51,14 @@ struct MultipleChoiceQuestion : Question {
         self._body as QuestionBody
     }
     
+    /// Creates a MultipleChoiceQuestion
+    /// - Parameters:
+    ///     - text: The top-level question text
+    ///     - body: The content of the question
+    /// - Throws:
+    ///     - `QuestionError.textEmpty` if text is empty
     init(text: String, body: MultipleChoiceQuestionBody) throws {
+        // Throw instead of returning nil so error reason is explicit
         guard !text.isEmpty else {
             throw QuestionError.textEmpty
         }
@@ -69,6 +76,12 @@ struct FillInTheBlankQuestion : Question {
         self._body as QuestionBody
     }
     
+    /// Creates a FillInTheBlankQuestion
+    /// - Parameters:
+    ///     - text: The top-level question text
+    ///     - body: The content of the question
+    /// - Throws:
+    ///     - `QuestionError.textEmpty` if text is empty
     init(text: String, body: FillInTheBlankQuestionBody) throws {
         guard !text.isEmpty else {
             throw QuestionError.textEmpty
@@ -87,6 +100,14 @@ struct MultipleChoiceQuestionBody : QuestionBody {
         let text: String
     }
     
+    /// Creates the body for a MultipleChoiceQuestion
+    /// - Parameters:
+    ///     - choices: List of choices for the question. Should be between 2 and 4, inclusive.
+    ///     - answer: The index of the choice that is the correct anser to the question. Should be in `[0, choices.count)`
+    /// - Throws:
+    ///     - `QuestionBodyError.choicesOutOfExpectedRange`if incorrect number of choices
+    ///     - `QuestionBodyError.answerOutOfBounds` if `answer < 0 || answer > choices.count`
+    ///     - `QuestionBodyError.answerTextEmpty` if any choice's text is empty
     init(choices: [Choice], answer: Int) throws {
         guard choices.count >= 2, choices.count <= 4 else {
             throw QuestionBodyError.choicesOutOfExpectedRange
@@ -107,6 +128,11 @@ struct MultipleChoiceQuestionBody : QuestionBody {
 struct FillInTheBlankQuestionBody : QuestionBody {
     let answer: String
     
+    /// Creates the body for a FillInTheBlankQuestion
+    /// - Parameters:
+    ///     - answer: The expected answer used to check submissions
+    /// - Throws:
+    ///     - `QuestionBodyError.answerTextEmpty` if the answer text is empty
     init(answer: String) throws {
         guard !answer.isEmpty else {
             throw QuestionBodyError.answerTextEmpty
