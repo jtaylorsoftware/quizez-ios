@@ -15,52 +15,88 @@ protocol SocketService {
     /// - Throws: `SocketError.invalidUrl` if URL is malformed
     init(url: String) throws
     
-    /// Delegate for event handlers
+    /// Delegate for event handlers. No-op default provided.
     var delegate: SocketServiceDelegate { get set }
     
-    /// Is the Socket connected
+    /// Is the socket connected
     var connected: Bool { get }
     
-    /// Session ID that Socket joined or created
+    /// Session ID that socket joined or created
     var sessionId: String? { get }
     
-    /// Is this Socket the owner of a Session
+    /// Is this socket the owner of a session
     var isSessionOwner: Bool { get }
     
-    /// Has the Session this Socket is in started
+    /// Has the session this socket is in started
     var sessionHasStarted: Bool { get }
     
-    /// Has the Session ended
+    /// Has the session ended
     var sessionHasEnded: Bool { get }
     
-    /// The name this Socket used if a Session was joined
+    /// The name this socket used if a session was joined
     var username: String? { get }
     
     /// Connects to the server
-    func connect(timeoutAfter: Double, onTimeout: (() -> Void)?)
+    /// - Throws:
+    ///     - `SocketError.alreadyConnected` if not connected
+    func connect(timeoutAfter: Double, onTimeout: (() -> Void)?) throws
     
     /// Disconnects from the server
-    func disconnect()
+    /// - Throws:
+    ///     - `SocketError.notConnected` if not connected
+    func disconnect() throws
     
     /// Creates a new quiz session under the client's own ID
-    func createSession()
+    /// - Throws:
+    ///     - `SocketError.notConnected` if not connected
+    ///     - `SocketError.alreadyInSession` if already in a session or created a session
+    func createSession() throws
     
     /// Joins a session by ID
-    func joinSession(_ request: JoinSessionRequest)
+    /// - Throws:
+    ///     - `SocketError.notConnected` if not connected
+    ///     - `SocketError.alreadyInSession` if already in a session or created a session
+    func joinSession(_ request: JoinSessionRequest) throws
     
     /// Removes a user from the session, if this socket owns the session
-    func kickUser(_ request: KickUserRequest)
+    /// - Throws:
+    ///     - `SocketError.notConnected` if not connected
+    ///     - `SocketError.notSessionOwner` if not the owner of a session
+    func kickUser(_ request: KickUserRequest) throws
     
     /// Starts the session, preventing users from joining and allowing questions to be pushed
-    func startSession(_ request: StartSessionRequest)
+    /// - Throws:
+    ///     - `SocketError.notConnected` if not connected
+    ///     - `SocketError.notSessionOwner` if not the owner of a session
+    func startSession() throws
     
-    /// Ends the session, removing all users, except this Socket, if it owns the Session
-    func endSession(_ request: EndSessionRequest)
+    /// Ends the session, removing all users, except this socket, if it owns the session
+    /// - Throws:
+    ///     - `SocketError.notConnected` if not connected
+    ///     - `SocketError.notSessionOwner` if not the owner of a session
+    ///     - `SocketError.sessionNotStarted` if session is not started
+    ///     - `SocketError.sessionEnded` if session has ended
+    func endSession() throws
+    
+    /// Adds a question to the session if this socket owns a session
+    /// - Throws:
+    ///     - `SocketError.notConnected` if not connected
+    ///     - `SocketError.notSessionOwner` if not the owner of a session
+    func addQuestion(_ request: AddQuestionRequest) throws
+    
+    /// Attempts to push the next question to the session, if this socket owns a session and has added
+    /// a question
+    /// - Throws:
+    ///     - `SocketError.notConnected` if not connected
+    ///     - `SocketError.notSessionOwner` if not the owner of a session
+    ///     - `SocketError.sessionNotStarted` if session has not started
+    ///     - `SocketError.sessionEnded` if session has ended
+    func pushNextQuestion() throws
 }
 
 extension SocketService {
-    func connect(timeoutAfter: Double = 3.0, onTimeout: (() -> Void)? = nil) {
-        connect(timeoutAfter: timeoutAfter, onTimeout: onTimeout)
+    func connect(timeoutAfter: Double = 3.0, onTimeout: (() -> Void)? = nil) throws {
+        try connect(timeoutAfter: timeoutAfter, onTimeout: onTimeout)
     }
 }
 
@@ -69,47 +105,75 @@ class SocketServiceDelegate {
     /// Completion result signature
     typealias SocketResult<T> = Result<T, SocketError>
     
-    /// The Socket has connected to the server
+    /// The socket has connected to the server.
     func onConnected() {}
     
-    /// The requested session has been created
+    /// The requested session has been created. The result will be `Result.failure` if
+    /// the response data could not be parsed.
     func onCreatedSession(_ result: SocketResult<CreatedSession>) {}
     
-    /// The Socket has disconnected from the server
+    /// The socket has disconnected from the server.
     func onDisconnected(_ reason: String) {}
     
-    /// The Socket has joined a session
+    /// The socket has joined a session. The result will be `Result.failure` if
+    /// the response data could not be parsed or if this socket sent a join request that failed.
     func onSessionJoined(_ result: SocketResult<UserJoined>) {}
     
-    /// The session owner (which might not be this Socket) has kicked a user
+    /// The session owner (which might not be this socket) has kicked a user. The result will be `Result.failure` if
+    /// the response data could not be parsed, or if this socket sent a kick request that failed.
     func onUserKicked(_ result: SocketResult<KickedUser>) {}
     
-    /// The session that this Socket is in or owns has started
+    /// The session that this socket is in or owns has started. The result will only be `Result.failure`
+    /// if this socket had sent a start request and the request failed.
     func onSessionStarted(_ result: SocketResult<Void>) {}
     
-    /// The session that this Socket is in or owns has ended
+    /// The session that this socket is in or owns has ended. The result will only be `Result.failure`
+    /// if this socket had sent an end request and the request failed.
     func onSessionEnded(_ result: SocketResult<Void>) {}
     
-    /// A user in the same session as this Socket has disconnected
+    /// A user in the same session as this socket has disconnected. The result will be `Result.failure` if
+    /// the response data could not be parsed.
     func onUserDisconnected(_ result: SocketResult<UserDisconnected>) {}
+    
+    /// A Question has been added by this socket. The result will be `Result.failure` if
+    /// this socket had sent an add question request that failed.
+    func onQuestionAdded(_ result: SocketResult<Void>) {}
+    
+    /// The next Question of the quiz has been pushed to the session. The result will be `Result.failure` if
+    /// the response data could not be parsed.
+    func onNextQuestion(_ result: SocketResult<NextQuestion>) {}
     
     /// Provides default in case clients of SocketService do not provide a delegate; also serves as a
     /// marker to trace calls in that case
     fileprivate static let `default` = SocketServiceDelegate()
 }
 
-final class SocketServiceImpl: SocketService {
+/// SocketService that uses socket.io in its implementation
+final class SocketIOService : SocketService {
     var delegate: SocketServiceDelegate = SocketServiceDelegate.default
     
-    private(set) var isSessionOwner: Bool = false
-    private(set) var connected: Bool = false
-    private(set) var username: String?
-    private(set) var sessionId: String?
-    private(set) var sessionHasStarted: Bool = false
-    private(set) var sessionHasEnded: Bool = false
+    var isSessionOwner: Bool {
+        status.isSessionOwner
+    }
+    var connected: Bool {
+        status.connected
+    }
+    var username: String? {
+        status.username
+    }
+    var sessionId: String? {
+        status.sessionId
+    }
+    var sessionHasStarted: Bool {
+        status.sessionHasStarted
+    }
+    var sessionHasEnded: Bool {
+        status.sessionHasEnded
+    }
     
     private var manager: SocketManager
     private var socket: SocketIOClient
+    private var status: SocketStatus
     
     init(url: String) throws {
         var config: SocketIOClientConfiguration = [.log(false)]
@@ -122,87 +186,132 @@ final class SocketServiceImpl: SocketService {
         }
         manager = SocketManager(socketURL: socketUrl, config: config)
         socket = manager.defaultSocket
-        connected = false
+        status = SocketStatus()
         registerHandlers()
     }
     
     deinit {
-        if connected {
-            disconnect()
-        }
+        try? disconnect()
     }
     
-    func connect(timeoutAfter: Double = 3.0, onTimeout: (() -> Void)? = nil) {
+    func connect(timeoutAfter: Double = 3.0, onTimeout: (() -> Void)? = nil) throws {
+        guard !status.connected else {
+            throw SocketError.alreadyConnected
+        }
         socket.connect(timeoutAfter: timeoutAfter, withHandler: onTimeout)
     }
     
-    func disconnect() {
+    func disconnect() throws {
+        guard status.connected else {
+            throw SocketError.notConnected
+        }
         socket.disconnect()
     }
     
-    func createSession() {
-        failIfInSession()
-        
-        socket.emit(SocketRequestEvent.createNewSession.rawValue)
-    }
-    
-    func joinSession(_ request: JoinSessionRequest) {
-        failIfInSession()
-        self.sessionId = request.id
-        self.username = request.name
-        socket.emit(SocketRequestEvent.joinSession.rawValue, request)
-    }
-    
-    func kickUser(_ request: KickUserRequest) {
-        failIfNotSessionOwner()
-        
-        socket.emit(SocketRequestEvent.kickUser.rawValue, request)
-    }
-    
-    func startSession(_ request: StartSessionRequest) {
-        failIfNotSessionOwner()
-        
-        socket.emit(SocketRequestEvent.startSession.rawValue, request)
-    }
-    
-    func endSession(_ request: EndSessionRequest) {
-        failIfNotSessionOwner()
-        failIfNotStarted()
-        
-        socket.emit(SocketRequestEvent.endSession.rawValue, request)
-    }
-    
-    private func failIfInSession(){
-        if sessionId != nil || isSessionOwner {
-            fatalError("Cannot create or join multiple sessions")
+    func createSession() throws {
+        guard status.connected else {
+            throw SocketError.notConnected
         }
+        guard !status.isSessionOwner else {
+            throw SocketError.notSessionOwner
+        }
+        
+        socket.emit(CreateNewSessionRequest.eventKey)
     }
     
-    private func failIfNotSessionOwner(){
-        if sessionId == nil || !isSessionOwner {
-            fatalError("Cannot perform action if not a session owner")
+    func joinSession(_ request: JoinSessionRequest) throws {
+        guard status.connected else {
+            throw SocketError.notConnected
         }
+        guard status.sessionId == nil else {
+            throw SocketError.alreadyInSession
+        }
+        
+        status.sessionId = request.session
+        status.username = request.name
+        socket.emit(JoinSessionRequest.eventKey, request)
     }
     
-    private func failIfNotStarted() {
-        if !sessionHasStarted {
-            fatalError("Cannot perform action if session not started")
+    func kickUser(_ request: KickUserRequest) throws {
+        guard status.connected else {
+            throw SocketError.notConnected
         }
+        guard status.isSessionOwner, let session = status.sessionId else {
+            throw SocketError.notSessionOwner
+        }
+        
+        socket.emit(KickUserRequest.eventKey, request.forSession(session: session))
     }
     
-    private func failIfEnded() {
-        if sessionHasEnded {
-            fatalError("Cannot perform action if session has ended")
+    func startSession() throws {
+        guard status.connected else {
+            throw SocketError.notConnected
         }
+        guard status.isSessionOwner, let session = status.sessionId else {
+            throw SocketError.notSessionOwner
+        }
+        
+        let request = StartSessionRequest(session: session)
+        socket.emit(StartSessionRequest.eventKey, request)
+    }
+    
+    func endSession() throws {
+        guard status.connected else {
+            throw SocketError.notConnected
+        }
+        guard status.isSessionOwner, let session = status.sessionId else {
+            throw SocketError.notSessionOwner
+        }
+        guard status.sessionHasStarted else {
+            throw SocketError.sessionNotStarted
+        }
+        guard !status.sessionHasEnded else {
+            throw SocketError.sessionEnded
+        }
+        
+        let request = EndSessionRequest(session: session)
+        socket.emit(EndSessionRequest.eventKey, request)
+    }
+    
+    func addQuestion(_ request: AddQuestionRequest) throws {
+        guard status.connected else {
+            throw SocketError.notConnected
+        }
+        guard status.isSessionOwner, let session = status.sessionId else {
+            throw SocketError.notSessionOwner
+        }
+        guard !status.sessionHasEnded else {
+            throw SocketError.sessionEnded
+        }
+        
+        socket.emit(AddQuestionRequest.eventKey, request.forSession(session: session))
+    }
+    
+    func pushNextQuestion() throws {
+        guard status.connected else {
+            throw SocketError.notConnected
+        }
+        guard status.isSessionOwner, let session = status.sessionId else {
+            throw SocketError.notSessionOwner
+        }
+        guard status.sessionHasStarted else {
+            throw SocketError.sessionNotStarted
+        }
+        guard !status.sessionHasEnded else {
+            throw SocketError.sessionEnded
+        }
+        
+        let request = NextQuestionRequest(session: session)
+        socket.emit(NextQuestionRequest.eventKey, request)
     }
     
     private func registerHandlers() {
         socket.on(clientEvent: .connect) { [weak self] data, _ in
-            self?.connected = true
+            self?.status.connected = true
             self?.delegate.onConnected()
         }
         socket.on(clientEvent: .disconnect) { [weak self] data, _ in
-            self?.reset()
+            self?.status.connected = false
             if let reason = data[0] as? String {
                 self?.delegate.onDisconnected(reason)
             } else {
@@ -212,8 +321,8 @@ final class SocketServiceImpl: SocketService {
         }
         socket.on(SocketEvent.createdSession.rawValue) { [weak self] data, _ in
             if let createdSession: CreatedSession = Self.readResponseFromData(from: data[0]) {
-                self?.sessionId = createdSession.id
-                self?.isSessionOwner = true
+                self?.status.sessionId = createdSession.session
+                self?.status.isSessionOwner = true
                 self?.delegate.onCreatedSession(.success(createdSession))
             } else {
                 self?.delegate.onCreatedSession(.failure(.unexpectedResponseData))
@@ -229,18 +338,21 @@ final class SocketServiceImpl: SocketService {
             }
         }
         socket.on(SocketEvent.sessionJoinFailed.rawValue) { [weak self] data, _ in
-            self?.sessionId = nil
-            self?.username = nil
+            self?.status.sessionId = nil
+            self?.status.username = nil
             self?.delegate.onSessionJoined(.failure(SocketError.joinFailed))
         }
         socket.on(SocketEvent.userKicked.rawValue) { [weak self] data, _ in
             if let kickedUser: KickedUser = Self.readResponseFromData(from: data[0]) {
-                if kickedUser.session == self?.sessionId && kickedUser.name == self?.username {
-                    self?.sessionId = nil
-                    self?.username = nil
-                    self?.sessionHasStarted = false
+                if kickedUser.session == self?.sessionId {
+                    if kickedUser.name == self?.username {
+                        // the user kicked was this socket
+                        self?.status.sessionId = nil
+                        self?.status.username = nil
+                        self?.status.sessionHasStarted = false
+                    }
+                    self?.delegate.onUserKicked(.success(kickedUser))
                 }
-                self?.delegate.onUserKicked(.success(kickedUser))
             } else {
                 self?.delegate.onUserKicked(.failure(.unexpectedResponseData))
             }
@@ -249,14 +361,14 @@ final class SocketServiceImpl: SocketService {
             self?.delegate.onUserKicked(.failure(.kickFailed))
         }
         socket.on(SocketEvent.sessionStarted.rawValue) { [weak self] data, _ in
-            self?.sessionHasStarted = true
+            self?.status.sessionHasStarted = true
             self?.delegate.onSessionStarted(.success(()))
         }
         socket.on(SocketEvent.startSessionFailed.rawValue){ [weak self] data, _ in
             self?.delegate.onSessionStarted(.failure(.startSessionFailed))
         }
         socket.on(SocketEvent.sessionEnded.rawValue) { [weak self] data, _ in
-            self?.sessionHasEnded = true
+            self?.status.sessionHasEnded = true
             self?.delegate.onSessionEnded(.success(()))
         }
         socket.on(SocketEvent.endSessionFailed.rawValue) { [weak self] data, _ in
@@ -271,50 +383,61 @@ final class SocketServiceImpl: SocketService {
                 self?.delegate.onUserDisconnected(.failure(.unexpectedResponseData))
             }
         }
+        socket.on(SocketEvent.addedQuestion.rawValue) { [weak self] data, _ in
+            self?.delegate.onQuestionAdded(.success(()))
+        }
+        socket.on(SocketEvent.questionAddFailed.rawValue) { [weak self] data, _ in
+            self?.delegate.onQuestionAdded(.failure(.addQuestionFailed))
+        }
+        socket.on(SocketEvent.nextQuestion.rawValue) { [weak self] data, _ in
+            if let nextQuestion: NextQuestion = Self.readResponseFromData(from: data[0]) {
+                if nextQuestion.session == self?.sessionId {
+                    self?.delegate.onNextQuestion(.success(nextQuestion))
+                }
+            } else {
+                self?.delegate.onNextQuestion(.failure(.unexpectedResponseData))
+            }
+        }
     }
     
     private static func readResponseFromData<T: SocketResponse>(from data: Any) -> T? {
         guard let json = data as? [String: Any] else {
             return nil
         }
-
+        
         return T(json: json)
     }
     
-    private func reset() {
-        self.connected = false
-        self.sessionId = nil
-        self.isSessionOwner = false
-        self.sessionHasStarted = false
-        self.sessionHasEnded = false
-        self.username = nil
+    /// Server response Socket events for QuizEz
+    private enum SocketEvent: String {
+        case createdSession = "created session"
+        
+        case joinedSession = "join success"
+        case sessionJoinFailed = "join failed"
+        
+        case userKicked = "kick success"
+        case kickUserFailed = "kick failed"
+        
+        case sessionStarted = "session started"
+        case startSessionFailed = "session start failed"
+        
+        case sessionEnded = "session ended"
+        case endSessionFailed = "session end failed"
+        
+        case userDisconnected = "user disconnected"
+        
+        case addedQuestion = "add question success"
+        case questionAddFailed = "add question failed"
+        
+        case nextQuestion = "next question"
     }
-}
-
-/// Client request Socket events for QuizEz
-fileprivate enum SocketRequestEvent: String {
-    case createNewSession = "create session"
-    case joinSession = "join session"
-    case kickUser = "kick"
-    case startSession = "start session"
-    case endSession = "end session"
-}
-
-/// Server response Socket events for QuizEz
-fileprivate enum SocketEvent: String {
-    case createdSession = "created session"
     
-    case joinedSession = "join success"
-    case sessionJoinFailed = "join failed"
-    
-    case userKicked = "kick success"
-    case kickUserFailed = "kick failed"
-    
-    case sessionStarted = "session started"
-    case startSessionFailed = "session start failed"
-    
-    case sessionEnded = "session ended"
-    case endSessionFailed = "session end failed"
-    
-    case userDisconnected = "user disconnected"
+    private struct SocketStatus {
+        var isSessionOwner: Bool = false
+        var connected: Bool = false
+        var username: String?
+        var sessionId: String?
+        var sessionHasStarted: Bool = false
+        var sessionHasEnded: Bool = false
+    }
 }

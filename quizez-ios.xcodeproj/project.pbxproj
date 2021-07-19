@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		3248B7EA26A3F88D002A8660 /* Question.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3248B7E926A3F88D002A8660 /* Question.swift */; };
+		3248B7EC26A4058F002A8660 /* Question_iosTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3248B7EB26A4058F002A8660 /* Question_iosTests.swift */; };
 		32BABEE126A205E4002618A0 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 32BABEE026A205E4002618A0 /* AppDelegate.swift */; };
 		32BABEE326A205E4002618A0 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 32BABEE226A205E4002618A0 /* SceneDelegate.swift */; };
 		32BABEE526A205E4002618A0 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 32BABEE426A205E4002618A0 /* ViewController.swift */; };
@@ -18,7 +20,7 @@
 		32BABF1526A20B09002618A0 /* SocketService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 32BABF1426A20B09002618A0 /* SocketService.swift */; };
 		32BABF1926A20E93002618A0 /* SocketError.swift in Sources */ = {isa = PBXBuildFile; fileRef = 32BABF1826A20E93002618A0 /* SocketError.swift */; };
 		32BABF1B26A21E5F002618A0 /* Responses.swift in Sources */ = {isa = PBXBuildFile; fileRef = 32BABF1A26A21E5F002618A0 /* Responses.swift */; };
-		32BABF1D26A22FCD002618A0 /* SocketServiceImpl_iosTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 32BABF1C26A22FCD002618A0 /* SocketServiceImpl_iosTests.swift */; };
+		32BABF1D26A22FCD002618A0 /* SocketIOService_iosTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 32BABF1C26A22FCD002618A0 /* SocketIOService_iosTests.swift */; };
 		32BABF2126A24FFF002618A0 /* SocketServiceDelegateMock.swift in Sources */ = {isa = PBXBuildFile; fileRef = 32BABF2026A24FFF002618A0 /* SocketServiceDelegateMock.swift */; };
 		32BABF2426A2B4B0002618A0 /* Requests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 32BABF2326A2B4B0002618A0 /* Requests.swift */; };
 /* End PBXBuildFile section */
@@ -41,6 +43,8 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		3248B7E926A3F88D002A8660 /* Question.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Question.swift; sourceTree = "<group>"; };
+		3248B7EB26A4058F002A8660 /* Question_iosTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Question_iosTests.swift; sourceTree = "<group>"; };
 		32BABEDD26A205E4002618A0 /* quizez-ios.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "quizez-ios.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		32BABEE026A205E4002618A0 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		32BABEE226A205E4002618A0 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -57,7 +61,7 @@
 		32BABF1426A20B09002618A0 /* SocketService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SocketService.swift; sourceTree = "<group>"; };
 		32BABF1826A20E93002618A0 /* SocketError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SocketError.swift; sourceTree = "<group>"; };
 		32BABF1A26A21E5F002618A0 /* Responses.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Responses.swift; sourceTree = "<group>"; };
-		32BABF1C26A22FCD002618A0 /* SocketServiceImpl_iosTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SocketServiceImpl_iosTests.swift; sourceTree = "<group>"; };
+		32BABF1C26A22FCD002618A0 /* SocketIOService_iosTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SocketIOService_iosTests.swift; sourceTree = "<group>"; };
 		32BABF2026A24FFF002618A0 /* SocketServiceDelegateMock.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SocketServiceDelegateMock.swift; sourceTree = "<group>"; };
 		32BABF2326A2B4B0002618A0 /* Requests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Requests.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -88,6 +92,14 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		3248B7E826A3F884002A8660 /* Quiz */ = {
+			isa = PBXGroup;
+			children = (
+				3248B7E926A3F88D002A8660 /* Question.swift */,
+			);
+			path = Quiz;
+			sourceTree = "<group>";
+		};
 		32BABED426A205E4002618A0 = {
 			isa = PBXGroup;
 			children = (
@@ -111,6 +123,7 @@
 		32BABEDF26A205E4002618A0 /* quizez-ios */ = {
 			isa = PBXGroup;
 			children = (
+				3248B7E826A3F884002A8660 /* Quiz */,
 				32BABF1326A20ADE002618A0 /* Network */,
 				32BABEE026A205E4002618A0 /* AppDelegate.swift */,
 				32BABEE226A205E4002618A0 /* SceneDelegate.swift */,
@@ -127,8 +140,9 @@
 			isa = PBXGroup;
 			children = (
 				32BABEF926A205E5002618A0 /* Info.plist */,
-				32BABF1C26A22FCD002618A0 /* SocketServiceImpl_iosTests.swift */,
+				32BABF1C26A22FCD002618A0 /* SocketIOService_iosTests.swift */,
 				32BABF2226A25003002618A0 /* Mocks */,
+				3248B7EB26A4058F002A8660 /* Question_iosTests.swift */,
 			);
 			path = "quizez-iosTests";
 			sourceTree = "<group>";
@@ -298,6 +312,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				32BABF1B26A21E5F002618A0 /* Responses.swift in Sources */,
+				3248B7EA26A3F88D002A8660 /* Question.swift in Sources */,
 				32BABF1926A20E93002618A0 /* SocketError.swift in Sources */,
 				32BABEE526A205E4002618A0 /* ViewController.swift in Sources */,
 				32BABEE126A205E4002618A0 /* AppDelegate.swift in Sources */,
@@ -311,7 +326,8 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				32BABF1D26A22FCD002618A0 /* SocketServiceImpl_iosTests.swift in Sources */,
+				3248B7EC26A4058F002A8660 /* Question_iosTests.swift in Sources */,
+				32BABF1D26A22FCD002618A0 /* SocketIOService_iosTests.swift in Sources */,
 				32BABF2126A24FFF002618A0 /* SocketServiceDelegateMock.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

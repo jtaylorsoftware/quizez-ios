@@ -19,6 +19,8 @@ class SocketServiceDelegateMock: SocketServiceDelegate {
     var started: XCTestExpectation?
     var ended: XCTestExpectation?
     var userDisconnected: XCTestExpectation?
+    var questionAdded: XCTestExpectation?
+    var nextQuestion: XCTestExpectation?
 
     override func onConnected() {
         connected?.fulfill()
@@ -28,7 +30,7 @@ class SocketServiceDelegateMock: SocketServiceDelegate {
         guard let exp = createdSession else { return }
         
         if case let .success(response) = result {
-            XCTAssert(response.id.count != 0, "Response id should have non-zero length")
+            XCTAssert(!response.session.isEmpty, "Response id should have non-zero length")
         } else {
             XCTAssert(false, "Response should have data")
         }
@@ -37,12 +39,12 @@ class SocketServiceDelegateMock: SocketServiceDelegate {
     
     override func onDisconnected(_ reason: String) {
         guard let exp = disconnected else { return }
-        XCTAssert(reason.count > 0, "Disconnect reason should be non-zero length")
+        XCTAssert(!reason.isEmpty, "Disconnect reason should be non-zero length")
         XCTAssert(reason != "unknown", "Reason should not be unknown")
         exp.fulfill()
     }
     
-    override func onSessionJoined(_ result: SocketServiceDelegate.SocketResult<UserJoined>) {
+    override func onSessionJoined(_ result: SocketResult<UserJoined>) {
         guard let exp = joined else { return }
         if case .failure(_) = result {
             XCTAssert(false, "Join should succeed")
@@ -50,18 +52,18 @@ class SocketServiceDelegateMock: SocketServiceDelegate {
         exp.fulfill()
     }
     
-    override func onUserKicked(_ result: SocketServiceDelegate.SocketResult<KickedUser>) {
+    override func onUserKicked(_ result: SocketResult<KickedUser>) {
         guard let exp = kicked else { return }
         if case let .success(kickedUser) = result {
-            XCTAssert(kickedUser.session.count > 0, "Kicked session ID should not be empty")
-            XCTAssert(kickedUser.name.count > 0, "Kicked user name should not be empty")
+            XCTAssert(!kickedUser.session.isEmpty, "Kicked session ID should not be empty")
+            XCTAssert(!kickedUser.name.isEmpty, "Kicked user name should not be empty")
         } else {
             XCTAssert(false, "Kick should succeed")
         }
         exp.fulfill()
     }
     
-    override func onSessionStarted(_ result: SocketServiceDelegate.SocketResult<Void>) {
+    override func onSessionStarted(_ result: SocketResult<Void>) {
         guard let exp = started else { return }
         if case .failure(_) = result {
             XCTAssert(false, "Start should succeed")
@@ -69,7 +71,7 @@ class SocketServiceDelegateMock: SocketServiceDelegate {
         exp.fulfill()
     }
     
-    override func onSessionEnded(_ result: SocketServiceDelegate.SocketResult<Void>) {
+    override func onSessionEnded(_ result: SocketResult<Void>) {
         guard let exp = ended else { return }
         if case .failure(_) = result {
             XCTAssert(false, "End should succeed")
@@ -77,10 +79,26 @@ class SocketServiceDelegateMock: SocketServiceDelegate {
         exp.fulfill()
     }
     
-    override func onUserDisconnected(_ result: SocketServiceDelegate.SocketResult<UserDisconnected>) {
+    override func onUserDisconnected(_ result: SocketResult<UserDisconnected>) {
         guard let exp = userDisconnected else { return }
         if case .failure(_) = result {
             XCTAssert(false, "UserDisconnected should succeed with data")
+        }
+        exp.fulfill()
+    }
+    
+    override func onQuestionAdded(_ result: SocketResult<Void>) {
+        guard let exp = questionAdded else { return }
+        if case .failure(_) = result {
+            XCTAssert(false, "QuestionAdded should succeed")
+        }
+        exp.fulfill()
+    }
+    
+    override func onNextQuestion(_ result: SocketResult<NextQuestion>) {
+        guard let exp = nextQuestion else { return }
+        if case .failure(_) = result {
+            XCTAssert(false, "NextQuestion should succeed at parsing returned data")
         }
         exp.fulfill()
     }

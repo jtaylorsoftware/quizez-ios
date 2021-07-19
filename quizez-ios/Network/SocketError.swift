@@ -7,12 +7,12 @@
 
 import Foundation
 
-/// Errors that may occur when dealing with SocketService
+/// Errors that may occur when dealing with `SocketService`
 enum SocketError: Error {
-    /// Invalid URL format when constructing SocketService
+    /// Invalid `URL` format when constructing `SocketService`
     case invalidUrl
     
-    /// Service timed out when connecting to the server
+    /// `SocketService` timed out when connecting to the server
     case connectionTimeout
     
     /// The response data from a handler could not be cast to expected type
@@ -20,6 +20,24 @@ enum SocketError: Error {
     
     /// The request data from a sender could not be encoded
     case encodingError
+    
+    /// Could not complete a request because the `SocketService` is already connected
+    case alreadyConnected
+    
+    /// Could not complete a request because the `SocketService` is already in a session
+    case alreadyInSession
+    
+    /// Could not complete a request because it requires the `SocketService` to be connected
+    case notConnected
+    
+    /// Could not complete a request because it requires the `SocketService` to be the owner of a session
+    case notSessionOwner
+    
+    /// Could not complete a request because it requires the `SocketService` to have started the session
+    case sessionNotStarted
+    
+    /// Could not complete a request because the session has ended
+    case sessionEnded
     
     /// Failed to join session
     case joinFailed
@@ -32,4 +50,7 @@ enum SocketError: Error {
     
     /// Failed to end session
     case endSessionFailed
+    
+    /// Failed to add question
+    case addQuestionFailed
 }
