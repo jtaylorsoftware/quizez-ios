@@ -212,8 +212,8 @@ final class SocketIOService : SocketService {
         guard status.connected else {
             throw SocketError.notConnected
         }
-        guard !status.isSessionOwner else {
-            throw SocketError.notSessionOwner
+        guard status.sessionId == nil else {
+            throw SocketError.alreadyInSession
         }
         
         socket.emit(CreateNewSessionRequest.eventKey)
