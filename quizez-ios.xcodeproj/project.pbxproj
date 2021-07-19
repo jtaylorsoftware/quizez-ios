@@ -19,10 +19,10 @@
 		32BABF1226A20A0A002618A0 /* SocketIO in Frameworks */ = {isa = PBXBuildFile; productRef = 32BABF1126A20A0A002618A0 /* SocketIO */; };
 		32BABF1526A20B09002618A0 /* SocketService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 32BABF1426A20B09002618A0 /* SocketService.swift */; };
 		32BABF1926A20E93002618A0 /* SocketError.swift in Sources */ = {isa = PBXBuildFile; fileRef = 32BABF1826A20E93002618A0 /* SocketError.swift */; };
-		32BABF1B26A21E5F002618A0 /* Responses.swift in Sources */ = {isa = PBXBuildFile; fileRef = 32BABF1A26A21E5F002618A0 /* Responses.swift */; };
+		32BABF1B26A21E5F002618A0 /* SocketResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = 32BABF1A26A21E5F002618A0 /* SocketResponse.swift */; };
 		32BABF1D26A22FCD002618A0 /* SocketIOService_iosTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 32BABF1C26A22FCD002618A0 /* SocketIOService_iosTests.swift */; };
 		32BABF2126A24FFF002618A0 /* SocketServiceDelegateMock.swift in Sources */ = {isa = PBXBuildFile; fileRef = 32BABF2026A24FFF002618A0 /* SocketServiceDelegateMock.swift */; };
-		32BABF2426A2B4B0002618A0 /* Requests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 32BABF2326A2B4B0002618A0 /* Requests.swift */; };
+		32BABF2426A2B4B0002618A0 /* SocketRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 32BABF2326A2B4B0002618A0 /* SocketRequest.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -60,10 +60,10 @@
 		32BABF0426A205E5002618A0 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		32BABF1426A20B09002618A0 /* SocketService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SocketService.swift; sourceTree = "<group>"; };
 		32BABF1826A20E93002618A0 /* SocketError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SocketError.swift; sourceTree = "<group>"; };
-		32BABF1A26A21E5F002618A0 /* Responses.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Responses.swift; sourceTree = "<group>"; };
+		32BABF1A26A21E5F002618A0 /* SocketResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SocketResponse.swift; sourceTree = "<group>"; };
 		32BABF1C26A22FCD002618A0 /* SocketIOService_iosTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SocketIOService_iosTests.swift; sourceTree = "<group>"; };
 		32BABF2026A24FFF002618A0 /* SocketServiceDelegateMock.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SocketServiceDelegateMock.swift; sourceTree = "<group>"; };
-		32BABF2326A2B4B0002618A0 /* Requests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Requests.swift; sourceTree = "<group>"; };
+		32BABF2326A2B4B0002618A0 /* SocketRequest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SocketRequest.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -161,8 +161,8 @@
 			children = (
 				32BABF1426A20B09002618A0 /* SocketService.swift */,
 				32BABF1826A20E93002618A0 /* SocketError.swift */,
-				32BABF1A26A21E5F002618A0 /* Responses.swift */,
-				32BABF2326A2B4B0002618A0 /* Requests.swift */,
+				32BABF1A26A21E5F002618A0 /* SocketResponse.swift */,
+				32BABF2326A2B4B0002618A0 /* SocketRequest.swift */,
 			);
 			path = Network;
 			sourceTree = "<group>";
@@ -311,13 +311,13 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				32BABF1B26A21E5F002618A0 /* Responses.swift in Sources */,
+				32BABF1B26A21E5F002618A0 /* SocketResponse.swift in Sources */,
 				3248B7EA26A3F88D002A8660 /* Question.swift in Sources */,
 				32BABF1926A20E93002618A0 /* SocketError.swift in Sources */,
 				32BABEE526A205E4002618A0 /* ViewController.swift in Sources */,
 				32BABEE126A205E4002618A0 /* AppDelegate.swift in Sources */,
 				32BABF1526A20B09002618A0 /* SocketService.swift in Sources */,
-				32BABF2426A2B4B0002618A0 /* Requests.swift in Sources */,
+				32BABF2426A2B4B0002618A0 /* SocketRequest.swift in Sources */,
 				32BABEE326A205E4002618A0 /* SceneDelegate.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

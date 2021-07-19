@@ -430,6 +430,13 @@ final class SocketIOService : SocketService {
         case questionAddFailed = "add question failed"
         
         case nextQuestion = "next question"
+        
+        // User submitted response to a session they joined
+        case submittedResponse = "question response success"
+        case responseSubmissionFailed = "question response failed"
+        
+        // Session creator received response
+        case responseAdded = "question response added"
     }
     
     private struct SocketStatus {
