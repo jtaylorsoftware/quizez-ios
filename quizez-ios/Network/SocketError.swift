@@ -33,6 +33,9 @@ enum SocketError: Error {
     /// Could not complete a request because it requires the `SocketService` to be the owner of a session
     case notSessionOwner
     
+    /// Could not complete a request because it requires the `SocketService` to have joined a session
+    case didNotJoinSession
+    
     /// Could not complete a request because it requires the `SocketService` to have started the session
     case sessionNotStarted
     
@@ -53,4 +56,7 @@ enum SocketError: Error {
     
     /// Failed to add question
     case addQuestionFailed
+    
+    /// Failed to respond to question
+    case responseSubmissionFailed
 }

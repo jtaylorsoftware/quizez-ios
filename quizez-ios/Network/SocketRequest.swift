@@ -84,20 +84,26 @@ struct EndSessionRequest: SocketRequest {
 }
 
 /// If socket owns a session, add a Question to its quiz
-struct AddQuestionRequest: SocketRequest {
+class AddQuestionRequest: SocketRequest {
     static let eventKey: String = "add question"
     var session: String
     
-    /// The text of the Question
-    let text: String
+    let question: Question
     
-    /// The body of the Question
-    let body: QuestionBody
-    
-    init(text: String, body: QuestionBody, session: String = "") {
-        self.text = text
-        self.body = body
+    init<T: Question>(question: T, session: String = "") {
+        self.question = question
         self.session = session
+    }
+    
+    func encode(to encoder: Encoder) throws {
+        var container = encoder.container(keyedBy: CodingKeys.self)
+        try container.encode(session, forKey: .session)
+        try container.encode(question, forKey: .question)
+    }
+    
+    enum CodingKeys: String, CodingKey {
+        case session
+        case question
     }
 }
 
@@ -107,36 +113,40 @@ struct NextQuestionRequest: SocketRequest {
     var session: String
 }
 
-extension AddQuestionRequest: Encodable {
+/// Socket submits response to session that they joined
+class SubmitResponseRequest: SocketRequest {
+    static let eventKey: String = "question response"
+    
+    var session: String
+    
+    /// The index of the question being responded to
+    let index: Int
+    
+    /// The name of the user responding
+    let name: String
+    
+    /// The response being sent
+    let response: Response
+    
+    init<T: Response>(index: Int, name: String, response: T, session: String = "") {
+        self.session = session
+        self.name = name
+        self.index = index
+        self.response = response
+    }
+    
     func encode(to encoder: Encoder) throws {
         var container = encoder.container(keyedBy: CodingKeys.self)
         try container.encode(session, forKey: .session)
-        try container.encode(text, forKey: .text)
-        
-        var bodyContainer = container.nestedContainer(keyedBy: BodyKeys.self, forKey: .body)
-        
-        switch body {
-        case let body as MultipleChoiceQuestionBody:
-            try bodyContainer.encode(QuestionType.multipleChoice.rawValue, forKey: .type)
-            try bodyContainer.encode(body.choices, forKey: .choices)
-            try bodyContainer.encode(body.answer, forKey: .answer)
-        case let body as FillInTheBlankQuestionBody:
-            try bodyContainer.encode(QuestionType.fillInTheBlank.rawValue, forKey: .type)
-            try bodyContainer.encode(body.answer, forKey: .answer)
-        default:
-            throw EncodingError.invalidValue(body, .init(codingPath: [CodingKeys.body], debugDescription: "AddQuestionRequest.body has unsupported type \(type(of: body))"))
-        }
+        try container.encode(name, forKey: .name)
+        try container.encode(index, forKey: .index)
+        try container.encode(response, forKey: .response)
     }
     
     enum CodingKeys: String, CodingKey {
         case session
-        case text
-        case body
-    }
-    
-    enum BodyKeys: String, CodingKey {
-        case type
-        case choices
-        case answer
+        case name
+        case index
+        case response
     }
 }

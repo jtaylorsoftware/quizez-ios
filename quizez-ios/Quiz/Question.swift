@@ -8,16 +8,22 @@
 import Foundation
 
 /// A Question for a quiz - can be one of multiple types
-protocol Question: Encodable {
+class Question: Encodable {
     /// The Question text
-    var text: String { get }
+    private(set) var text: String
     
-    /// The body of the Question
-    var body: QuestionBody { get }
+    /// The Question body
+    private(set) var body: QuestionBody
+    
+    fileprivate init(text: String, body: QuestionBody) {
+        self.text = text
+        self.body = body
+    }
 }
 
 /// The body of a Question, containing the submitter and question data
-protocol QuestionBody: Encodable {
+class QuestionBody: Encodable {
+    fileprivate init() {}
 }
 
 enum QuestionType: String, Encodable {
@@ -44,11 +50,9 @@ enum QuestionBodyError: Error {
 }
 
 /// A Question with multiple choices
-struct MultipleChoiceQuestion : Question {
-    let text: String
-    private let _body: MultipleChoiceQuestionBody
-    var body: QuestionBody {
-        self._body as QuestionBody
+class MultipleChoiceQuestion : Question {
+    var multipleChoiceBody: MultipleChoiceQuestionBody {
+        return body as! MultipleChoiceQuestionBody
     }
     
     /// Creates a MultipleChoiceQuestion
@@ -63,17 +67,25 @@ struct MultipleChoiceQuestion : Question {
             throw QuestionError.textEmpty
         }
         
-        self.text = text
-        self._body = body
+        super.init(text: text, body: body)
+    }
+    
+    override func encode(to encoder: Encoder) throws {
+        var container = encoder.container(keyedBy: CodingKeys.self)
+        try container.encode(text, forKey: .text)
+        try container.encode(multipleChoiceBody, forKey: .body)
+    }
+    
+    enum CodingKeys: String, CodingKey {
+        case text
+        case body
     }
 }
 
 /// A Question with one answer that users try to figure out
-struct FillInTheBlankQuestion : Question {
-    let text: String
-    private let _body: FillInTheBlankQuestionBody
-    var body: QuestionBody {
-        self._body as QuestionBody
+class FillInTheBlankQuestion : Question {
+    var fillInTheBlankBody: FillInTheBlankQuestionBody {
+        return body as! FillInTheBlankQuestionBody
     }
     
     /// Creates a FillInTheBlankQuestion
@@ -87,12 +99,22 @@ struct FillInTheBlankQuestion : Question {
             throw QuestionError.textEmpty
         }
         
-        self.text = text
-        self._body = body
+        super.init(text: text, body: body)
+    }
+    
+    override func encode(to encoder: Encoder) throws {
+        var container = encoder.container(keyedBy: CodingKeys.self)
+        try container.encode(text, forKey: .text)
+        try container.encode(fillInTheBlankBody, forKey: .body)
+    }
+    
+    enum CodingKeys: String, CodingKey {
+        case text
+        case body
     }
 }
 
-struct MultipleChoiceQuestionBody : QuestionBody {
+class MultipleChoiceQuestionBody : QuestionBody {
     let choices: [Choice]
     let answer: Int
     
@@ -123,9 +145,22 @@ struct MultipleChoiceQuestionBody : QuestionBody {
         self.choices = choices
         self.answer = answer
     }
+    
+    override func encode(to encoder: Encoder) throws {
+        var container = encoder.container(keyedBy: CodingKeys.self)
+        try container.encode(QuestionType.multipleChoice.rawValue, forKey: .type)
+        try container.encode(choices, forKey: .choices)
+        try container.encode(answer, forKey: .answer)
+    }
+    
+    enum CodingKeys: String, CodingKey {
+        case type
+        case choices
+        case answer
+    }
 }
 
-struct FillInTheBlankQuestionBody : QuestionBody {
+class FillInTheBlankQuestionBody : QuestionBody {
     let answer: String
     
     /// Creates the body for a FillInTheBlankQuestion
@@ -138,5 +173,16 @@ struct FillInTheBlankQuestionBody : QuestionBody {
             throw QuestionBodyError.answerTextEmpty
         }
         self.answer = answer
+    }
+    
+    override func encode(to encoder: Encoder) throws {
+        var container = encoder.container(keyedBy: CodingKeys.self)
+        try container.encode(QuestionType.fillInTheBlank.rawValue, forKey: .type)
+        try container.encode(answer, forKey: .answer)
+    }
+    
+    enum CodingKeys: String, CodingKey {
+        case type
+        case answer
     }
 }
