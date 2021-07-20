@@ -87,85 +87,50 @@ class NextQuestion: SocketResponse {
     /// Index of the Question in the quiz
     let index: Int
     
+    /// The associated Question
+    let question: Question
+    
     required init?(json: [String : Any]) {
         guard let session = json["session"] as? String,
-              let index = json["index"] as? Int else {
+              let index = json["index"] as? Int,
+              let question = json["question"] as? [String: Any],
+              let text = question["text"] as? String,
+              let rawBody = question["body"] as? [String: Any],
+              let rawType = rawBody["type"] as? String,
+              let questionType = QuestionType(rawValue: rawType) else {
             return nil
         }
         
         self.session = session
         self.index = index
-    }
-}
-
-class NextMultipleChoiceQuestion: NextQuestion {
-    let question: MultipleChoiceQuestion
-    
-    required init?(json: [String : Any]) {
-        guard let questionJson = json["question"] as? [String: Any],
-              let question = Self.parseQuestion(json: questionJson) else {
-            return nil
-        }
         
-        self.question = question
-        super.init(json: json)
-    }
-    
-    private static func parseQuestion(json: [String: Any]) -> MultipleChoiceQuestion? {
-        guard let question = json["question"] as? [String: Any],
-              let text = question["text"] as? String,
-              let body = question["body"] as? [String: Any],
-              let rawType = body["type"] as? String,
-              let type = QuestionType(rawValue: rawType),
-              type == .multipleChoice else {
-            return nil
-        }
-        
-        guard let answer = body["answer"] as? Int else {
-            return nil
-        }
-        guard let rawChoices = body["choices"] as? [[String: Any]] else {
-            return nil
-        }
-        var choices: [MultipleChoiceQuestionBody.Choice] = []
-        for choice in rawChoices {
-            guard let choiceText = choice["text"] as? String else {
+        var questionBody: Question.Body
+        switch questionType {
+        case .multipleChoice:
+            guard let rawChoices = rawBody["choices"] as? [[String: Any]] else {
                 return nil
             }
-            choices.append(.init(text: choiceText))
+            guard let answer = rawBody["answer"] as? Int else {
+                return nil
+            }
+            
+            var choices: [Question.Body.Choice] = []
+            for rawChoice in rawChoices {
+                guard let text = rawChoice["text"] as? String else {
+                    return nil
+                }
+                choices.append(.init(text: text))
+            }
+            
+            questionBody = Question.Body.multipleChoice(choices: choices, answer: answer)
+        case .fillInTheBlank:
+            guard let answer = rawBody["answer"] as? String else {
+                return nil
+            }
+            questionBody = Question.Body.fillInTheBlank(answer: answer)
         }
         
-        return try? MultipleChoiceQuestion(text: text, body: .init(choices: choices, answer: answer))
-    }
-}
-
-class NextFillInTheBlankQuestion: NextQuestion {
-    let question: FillInTheBlankQuestion
-    
-    required init?(json: [String : Any]) {
-        guard let questionJson = json["question"] as? [String: Any],
-              let question = Self.parseQuestion(json: questionJson) else {
-            return nil
-        }
-        
-        self.question = question
-        super.init(json: json)
-    }
-    
-    private static func parseQuestion(json: [String: Any]) -> FillInTheBlankQuestion? {
-        guard let question = json["question"] as? [String: Any],
-              let text = question["text"] as? String,
-              let body = question["body"] as? [String: Any],
-              let rawType = body["type"] as? String,
-              let type = QuestionType(rawValue: rawType),
-              type == .fillInTheBlank else {
-            return nil
-        }
-        
-        guard let answer = body["answer"] as? String else {
-            return nil
-        }
-        return try? FillInTheBlankQuestion(text: text, body: .init(answer: answer))
+        self.question = Question(text: text, body: questionBody)
     }
 }
 

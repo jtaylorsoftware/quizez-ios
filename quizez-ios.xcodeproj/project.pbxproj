@@ -8,7 +8,9 @@
 
 /* Begin PBXBuildFile section */
 		3248B7EA26A3F88D002A8660 /* Question.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3248B7E926A3F88D002A8660 /* Question.swift */; };
-		3248B7EC26A4058F002A8660 /* Question_iosTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3248B7EB26A4058F002A8660 /* Question_iosTests.swift */; };
+		3248B7EC26A4058F002A8660 /* QuestionTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3248B7EB26A4058F002A8660 /* QuestionTests.swift */; };
+		326655EE26A6BCB0008D8B32 /* BasicFunctionalityTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 326655ED26A6BCB0008D8B32 /* BasicFunctionalityTests.swift */; };
+		326655F026A6BD1E008D8B32 /* AdvancedInteractionTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 326655EF26A6BD1E008D8B32 /* AdvancedInteractionTests.swift */; };
 		32BABEE126A205E4002618A0 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 32BABEE026A205E4002618A0 /* AppDelegate.swift */; };
 		32BABEE326A205E4002618A0 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 32BABEE226A205E4002618A0 /* SceneDelegate.swift */; };
 		32BABEE526A205E4002618A0 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 32BABEE426A205E4002618A0 /* ViewController.swift */; };
@@ -20,7 +22,6 @@
 		32BABF1526A20B09002618A0 /* SocketService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 32BABF1426A20B09002618A0 /* SocketService.swift */; };
 		32BABF1926A20E93002618A0 /* SocketError.swift in Sources */ = {isa = PBXBuildFile; fileRef = 32BABF1826A20E93002618A0 /* SocketError.swift */; };
 		32BABF1B26A21E5F002618A0 /* SocketResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = 32BABF1A26A21E5F002618A0 /* SocketResponse.swift */; };
-		32BABF1D26A22FCD002618A0 /* SocketIOService_iosTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 32BABF1C26A22FCD002618A0 /* SocketIOService_iosTests.swift */; };
 		32BABF2126A24FFF002618A0 /* SocketServiceDelegateMock.swift in Sources */ = {isa = PBXBuildFile; fileRef = 32BABF2026A24FFF002618A0 /* SocketServiceDelegateMock.swift */; };
 		32BABF2426A2B4B0002618A0 /* SocketRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 32BABF2326A2B4B0002618A0 /* SocketRequest.swift */; };
 		32CB7B0626A65D7900395F47 /* SocketIOService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 32CB7B0526A65D7900395F47 /* SocketIOService.swift */; };
@@ -47,7 +48,9 @@
 
 /* Begin PBXFileReference section */
 		3248B7E926A3F88D002A8660 /* Question.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Question.swift; sourceTree = "<group>"; };
-		3248B7EB26A4058F002A8660 /* Question_iosTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Question_iosTests.swift; sourceTree = "<group>"; };
+		3248B7EB26A4058F002A8660 /* QuestionTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QuestionTests.swift; sourceTree = "<group>"; };
+		326655ED26A6BCB0008D8B32 /* BasicFunctionalityTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BasicFunctionalityTests.swift; sourceTree = "<group>"; };
+		326655EF26A6BD1E008D8B32 /* AdvancedInteractionTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AdvancedInteractionTests.swift; sourceTree = "<group>"; };
 		32BABEDD26A205E4002618A0 /* quizez-ios.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "quizez-ios.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		32BABEE026A205E4002618A0 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		32BABEE226A205E4002618A0 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -64,7 +67,6 @@
 		32BABF1426A20B09002618A0 /* SocketService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SocketService.swift; sourceTree = "<group>"; };
 		32BABF1826A20E93002618A0 /* SocketError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SocketError.swift; sourceTree = "<group>"; };
 		32BABF1A26A21E5F002618A0 /* SocketResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SocketResponse.swift; sourceTree = "<group>"; };
-		32BABF1C26A22FCD002618A0 /* SocketIOService_iosTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SocketIOService_iosTests.swift; sourceTree = "<group>"; };
 		32BABF2026A24FFF002618A0 /* SocketServiceDelegateMock.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SocketServiceDelegateMock.swift; sourceTree = "<group>"; };
 		32BABF2326A2B4B0002618A0 /* SocketRequest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SocketRequest.swift; sourceTree = "<group>"; };
 		32CB7B0526A65D7900395F47 /* SocketIOService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SocketIOService.swift; sourceTree = "<group>"; };
@@ -107,6 +109,15 @@
 			path = Quiz;
 			sourceTree = "<group>";
 		};
+		326655EC26A6BC53008D8B32 /* SocketIOServiceTests */ = {
+			isa = PBXGroup;
+			children = (
+				326655ED26A6BCB0008D8B32 /* BasicFunctionalityTests.swift */,
+				326655EF26A6BD1E008D8B32 /* AdvancedInteractionTests.swift */,
+			);
+			path = SocketIOServiceTests;
+			sourceTree = "<group>";
+		};
 		32BABED426A205E4002618A0 = {
 			isa = PBXGroup;
 			children = (
@@ -146,10 +157,10 @@
 		32BABEF626A205E5002618A0 /* quizez-iosTests */ = {
 			isa = PBXGroup;
 			children = (
+				326655EC26A6BC53008D8B32 /* SocketIOServiceTests */,
 				32BABEF926A205E5002618A0 /* Info.plist */,
-				32BABF1C26A22FCD002618A0 /* SocketIOService_iosTests.swift */,
 				32BABF2226A25003002618A0 /* Mocks */,
-				3248B7EB26A4058F002A8660 /* Question_iosTests.swift */,
+				3248B7EB26A4058F002A8660 /* QuestionTests.swift */,
 			);
 			path = "quizez-iosTests";
 			sourceTree = "<group>";
@@ -338,8 +349,9 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				3248B7EC26A4058F002A8660 /* Question_iosTests.swift in Sources */,
-				32BABF1D26A22FCD002618A0 /* SocketIOService_iosTests.swift in Sources */,
+				3248B7EC26A4058F002A8660 /* QuestionTests.swift in Sources */,
+				326655F026A6BD1E008D8B32 /* AdvancedInteractionTests.swift in Sources */,
+				326655EE26A6BCB0008D8B32 /* BasicFunctionalityTests.swift in Sources */,
 				32BABF2126A24FFF002618A0 /* SocketServiceDelegateMock.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

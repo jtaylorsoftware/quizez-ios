@@ -7,92 +7,79 @@
 
 import Foundation
 
-/// A user-submitted response to a quiz Question
-class Response: Encodable {
-    /// The name of user submitting response
-    private(set) var submitter: String
+/// A response to a question
+struct Response {
+    /// The name of the submitter
+    let submitter: String
     
-    fileprivate init(submitter: String) {
-        self.submitter = submitter
+    /// The content of the response
+    let body: Body
+    
+    /// Represents the response body content for various question types
+    enum Body {
+        case multipleChoice(Int)
+        case fillInTheBlank(String)
     }
 }
 
-class MultipleChoiceResponse : Response {
-    /// The index of the selected choice
-    let choice: Int
-    
-    /// Creates a MultipleChoiceResponse for a Question
-    /// - Throws:
-    ///     - `ResponseError.submitterEmpty` if submitter is empty
-    ///     - `ResponseError.choiceOutOfBounds` if choice out of bounds for the question
-    init(submitter: String, choice: Int, for question: MultipleChoiceQuestion) throws {
-        guard !submitter.isEmpty else {
-            throw ResponseError.submitterEmpty
-        }
-        guard choice >= 0, choice < question.multipleChoiceBody.choices.count else {
-            throw ResponseError.choiceOutOfBounds
-        }
-        
-        self.choice = choice
-        super.init(submitter: submitter)
-    }
-    
-    override func encode(to encoder: Encoder) throws {
+extension Response: Encodable {
+    func encode(to encoder: Encoder) throws {
         var container = encoder.container(keyedBy: CodingKeys.self)
         try container.encode(submitter, forKey: .submitter)
-        try container.encode(QuestionType.multipleChoice.rawValue, forKey: .type)
-        try container.encode(choice, forKey: .choice)
+        switch body {
+        case let .multipleChoice(choice):
+            try container.encode(QuestionType.multipleChoice, forKey: .type)
+            try container.encode(choice, forKey: .answer)
+        case let .fillInTheBlank(answer):
+            try container.encode(QuestionType.fillInTheBlank, forKey: .type)
+            try container.encode(answer, forKey: .answer)
+        }
     }
     
     enum CodingKeys: String, CodingKey {
         case type
         case submitter
-        case choice
+        case answer
     }
 }
 
-class FillInTheBlankResponse : Response {
-    /// The text the user submited as the answer
-    let text: String
-    
-    /// Creates a MultipleChoiceResponse
-    /// - Throws:
-    ///     - `ResponseError.submitterEmpty` if submitter is empty
-    ///     - `ResponseError.textEmpty` if answer text empty
-    init(submitter: String, text: String) throws {
-        guard !submitter.isEmpty else {
-            throw ResponseError.submitterEmpty
-        }
-        guard !text.isEmpty else {
-            throw ResponseError.textEmpty
+extension Response {
+    /// Validates a Response's text and body against a Question
+    /// - Parameter question: The Question to validate against
+    /// - Returns: List of validation constraints failed.
+    func validate(for question: Question? = nil) -> [ResponseValidationConstraint] {
+        var errors: [ResponseValidationConstraint] = []
+        
+        if submitter.isEmpty {
+            errors.append(.submitterNotEmpty)
         }
         
-        self.text = text
-        super.init(submitter: submitter)
-    }
-    
-    override func encode(to encoder: Encoder) throws {
-        var container = encoder.container(keyedBy: CodingKeys.self)
-        try container.encode(submitter, forKey: .submitter)
-        try container.encode(QuestionType.fillInTheBlank.rawValue, forKey: .type)
-        try container.encode(text, forKey: .text)
-    }
-
-    enum CodingKeys: String, CodingKey {
-        case type
-        case submitter
-        case text
+        switch body {
+        case let .multipleChoice(choice):
+            guard let question = question, case .multipleChoice(let choices, _) = question.body else {
+                return errors
+            }
+            if choice < 0 || choice >= choices.count {
+                errors.append(.answerWithinBounds)
+            }
+        case let .fillInTheBlank(answer):
+            if answer.isEmpty {
+                errors.append(.answerNotEmpty)
+            }
+        }
+        
+        return errors
     }
 }
 
 /// Validation errors when creating a Response for a Question
-enum ResponseError : Error {
-    /// The submitter is empty
-    case submitterEmpty
+enum ResponseValidationConstraint: Equatable {
+    /// The submitter must be nonempty
+    case submitterNotEmpty
     
-    /// The text of a FillIn is empty
-    case textEmpty
+    /// The answer of a FillIn must be nonempty
+    case answerNotEmpty
     
-    /// The choice of a MultipleChoice is out of bounds
-    case choiceOutOfBounds
+    /// The choice of a MultipleChoice must be in range `[0, choices.count)`
+    case answerWithinBounds
 }

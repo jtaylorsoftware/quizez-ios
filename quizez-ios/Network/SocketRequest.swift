@@ -90,7 +90,7 @@ class AddQuestionRequest: SocketRequest {
     
     let question: Question
     
-    init<T: Question>(question: T, session: String = "") {
+    init(question: Question, session: String = "") {
         self.question = question
         self.session = session
     }
@@ -128,7 +128,7 @@ class SubmitResponseRequest: SocketRequest {
     /// The response being sent
     let response: Response
     
-    init<T: Response>(index: Int, name: String, response: T, session: String = "") {
+    init(index: Int, name: String, response: Response, session: String = "") {
         self.session = session
         self.name = name
         self.index = index
