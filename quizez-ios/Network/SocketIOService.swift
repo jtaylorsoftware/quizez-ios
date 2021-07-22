@@ -10,7 +10,7 @@ import SocketIO
 
 /// SocketService that uses socket.io in its implementation
 final class SocketIOService : SocketService {
-    var delegate: SocketServiceDelegate = SocketServiceDelegate.default
+    var delegate: SocketServiceDelegate = SocketServiceDelegateImpl.default
     
     var isSessionOwner: Bool {
         sessionInfo.isSessionOwner

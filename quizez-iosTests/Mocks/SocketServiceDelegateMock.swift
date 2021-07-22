@@ -24,11 +24,11 @@ class SocketServiceDelegateMock: SocketServiceDelegate {
     var responseSubmitted: XCTestExpectation?
     var responseAdded: XCTestExpectation?
 
-    override func onConnected() {
+    func onConnected() {
         connected?.fulfill()
     }
     
-    override func onCreatedSession(_ result: SocketResult<CreatedSession>) {
+    func onCreatedSession(_ result: SocketResult<CreatedSession>) {
         guard let exp = createdSession else { return }
         
         if case let .success(response) = result {
@@ -39,14 +39,14 @@ class SocketServiceDelegateMock: SocketServiceDelegate {
         exp.fulfill()
     }
     
-    override func onDisconnected(_ reason: String) {
+    func onDisconnected(_ reason: String) {
         guard let exp = disconnected else { return }
         XCTAssert(!reason.isEmpty, "Disconnect reason should be non-zero length")
         XCTAssert(reason != "unknown", "Reason should not be unknown")
         exp.fulfill()
     }
     
-    override func onSessionJoined(_ result: SocketResult<UserJoined>) {
+    func onSessionJoined(_ result: SocketResult<UserJoined>) {
         guard let exp = joined else { return }
         if case .failure(_) = result {
             XCTAssert(false, "Join should succeed")
@@ -54,7 +54,7 @@ class SocketServiceDelegateMock: SocketServiceDelegate {
         exp.fulfill()
     }
     
-    override func onUserKicked(_ result: SocketResult<KickedUser>) {
+    func onUserKicked(_ result: SocketResult<KickedUser>) {
         guard let exp = kicked else { return }
         if case let .success(kickedUser) = result {
             XCTAssert(!kickedUser.session.isEmpty, "Kicked session ID should not be empty")
@@ -65,7 +65,7 @@ class SocketServiceDelegateMock: SocketServiceDelegate {
         exp.fulfill()
     }
     
-    override func onSessionStarted(_ result: SocketResult<Void>) {
+    func onSessionStarted(_ result: SocketResult<Void>) {
         guard let exp = started else { return }
         if case .failure(_) = result {
             XCTAssert(false, "Start should succeed")
@@ -73,7 +73,7 @@ class SocketServiceDelegateMock: SocketServiceDelegate {
         exp.fulfill()
     }
     
-    override func onSessionEnded(_ result: SocketResult<Void>) {
+    func onSessionEnded(_ result: SocketResult<Void>) {
         guard let exp = ended else { return }
         if case .failure(_) = result {
             XCTAssert(false, "End should succeed")
@@ -81,7 +81,7 @@ class SocketServiceDelegateMock: SocketServiceDelegate {
         exp.fulfill()
     }
     
-    override func onUserDisconnected(_ result: SocketResult<UserDisconnected>) {
+    func onUserDisconnected(_ result: SocketResult<UserDisconnected>) {
         guard let exp = userDisconnected else { return }
         if case .failure(_) = result {
             XCTAssert(false, "UserDisconnected should succeed with data")
@@ -89,7 +89,7 @@ class SocketServiceDelegateMock: SocketServiceDelegate {
         exp.fulfill()
     }
     
-    override func onQuestionAdded(_ result: SocketResult<Void>) {
+    func onQuestionAdded(_ result: SocketResult<Void>) {
         guard let exp = questionAdded else { return }
         if case .failure(_) = result {
             XCTAssert(false, "QuestionAdded should succeed")
@@ -97,7 +97,7 @@ class SocketServiceDelegateMock: SocketServiceDelegate {
         exp.fulfill()
     }
     
-    override func onNextQuestion(_ result: SocketResult<NextQuestion>) {
+    func onNextQuestion(_ result: SocketResult<NextQuestion>) {
         guard let exp = nextQuestion else { return }
         if case .failure(_) = result {
             XCTAssert(false, "NextQuestion should succeed at parsing returned data")
@@ -105,7 +105,7 @@ class SocketServiceDelegateMock: SocketServiceDelegate {
         exp.fulfill()
     }
     
-    override func onQuestionResponseSubmitted(_ result: SocketServiceDelegate.SocketResult<QuestionResponseSubmitted>) {
+    func onQuestionResponseSubmitted(_ result: SocketResult<QuestionResponseSubmitted>) {
         guard let exp = responseSubmitted else { return }
         if case .failure(_) = result {
             XCTAssert(false, "QuestionResponseSubmitted should succeed at parsing returned data")
@@ -113,7 +113,7 @@ class SocketServiceDelegateMock: SocketServiceDelegate {
         exp.fulfill()
     }
     
-    override func onQuestionResponseAdded(_ result: SocketServiceDelegate.SocketResult<QuestionResponseAdded>) {
+    func onQuestionResponseAdded(_ result: SocketResult<QuestionResponseAdded>) {
         guard let exp = responseAdded else { return }
         if case .failure(_) = result {
             XCTAssert(false, "QuestionResponseSubmitted should succeed at parsing returned data")
