@@ -9,11 +9,19 @@
 /* Begin PBXBuildFile section */
 		3248B7EA26A3F88D002A8660 /* Question.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3248B7E926A3F88D002A8660 /* Question.swift */; };
 		3248B7EC26A4058F002A8660 /* QuestionTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3248B7EB26A4058F002A8660 /* QuestionTests.swift */; };
+		325495C326AA01270078E290 /* MainViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 325495C226AA01270078E290 /* MainViewModel.swift */; };
+		325495C526AA01390078E290 /* ViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 325495C426AA01390078E290 /* ViewModel.swift */; };
+		325495CA26AA0F340078E290 /* AppSettings.swift in Sources */ = {isa = PBXBuildFile; fileRef = 325495C926AA0F340078E290 /* AppSettings.swift */; };
+		3259F66126A8F6FF0094C49A /* RoundedButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3259F65F26A8F6FF0094C49A /* RoundedButton.swift */; };
+		3259F66226A8F6FF0094C49A /* MainScreenButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3259F66026A8F6FF0094C49A /* MainScreenButton.swift */; };
 		326655EE26A6BCB0008D8B32 /* BasicFunctionalityTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 326655ED26A6BCB0008D8B32 /* BasicFunctionalityTests.swift */; };
 		326655F026A6BD1E008D8B32 /* AdvancedInteractionTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 326655EF26A6BD1E008D8B32 /* AdvancedInteractionTests.swift */; };
+		3298C89126AA2330009CB54F /* RxCocoa in Frameworks */ = {isa = PBXBuildFile; productRef = 3298C89026AA2330009CB54F /* RxCocoa */; };
+		3298C89326AA2330009CB54F /* RxSwift in Frameworks */ = {isa = PBXBuildFile; productRef = 3298C89226AA2330009CB54F /* RxSwift */; };
+		3298C89A26AA2820009CB54F /* RxRelay in Frameworks */ = {isa = PBXBuildFile; productRef = 3298C89926AA2820009CB54F /* RxRelay */; };
 		32BABEE126A205E4002618A0 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 32BABEE026A205E4002618A0 /* AppDelegate.swift */; };
 		32BABEE326A205E4002618A0 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 32BABEE226A205E4002618A0 /* SceneDelegate.swift */; };
-		32BABEE526A205E4002618A0 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 32BABEE426A205E4002618A0 /* ViewController.swift */; };
+		32BABEE526A205E4002618A0 /* MainViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 32BABEE426A205E4002618A0 /* MainViewController.swift */; };
 		32BABEE826A205E4002618A0 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 32BABEE626A205E4002618A0 /* Main.storyboard */; };
 		32BABEEA26A205E5002618A0 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 32BABEE926A205E5002618A0 /* Assets.xcassets */; };
 		32BABEED26A205E5002618A0 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 32BABEEB26A205E5002618A0 /* LaunchScreen.storyboard */; };
@@ -27,6 +35,7 @@
 		32CB7B0626A65D7900395F47 /* SocketIOService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 32CB7B0526A65D7900395F47 /* SocketIOService.swift */; };
 		32CB7B0826A65DB300395F47 /* SocketServiceDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 32CB7B0726A65DB300395F47 /* SocketServiceDelegate.swift */; };
 		32D4AD3226A75F2500858B83 /* ResponseTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 32D4AD3126A75F2500858B83 /* ResponseTests.swift */; };
+		32E29E7C26AA6DCC002090F8 /* Injector.swift in Sources */ = {isa = PBXBuildFile; fileRef = 32E29E7B26AA6DCC002090F8 /* Injector.swift */; };
 		32EF494E26A611E10099BE9C /* Response.swift in Sources */ = {isa = PBXBuildFile; fileRef = 32EF494D26A611E10099BE9C /* Response.swift */; };
 /* End PBXBuildFile section */
 
@@ -50,12 +59,17 @@
 /* Begin PBXFileReference section */
 		3248B7E926A3F88D002A8660 /* Question.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Question.swift; sourceTree = "<group>"; };
 		3248B7EB26A4058F002A8660 /* QuestionTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QuestionTests.swift; sourceTree = "<group>"; };
+		325495C226AA01270078E290 /* MainViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainViewModel.swift; sourceTree = "<group>"; };
+		325495C426AA01390078E290 /* ViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewModel.swift; sourceTree = "<group>"; };
+		325495C926AA0F340078E290 /* AppSettings.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppSettings.swift; sourceTree = "<group>"; };
+		3259F65F26A8F6FF0094C49A /* RoundedButton.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RoundedButton.swift; sourceTree = "<group>"; };
+		3259F66026A8F6FF0094C49A /* MainScreenButton.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MainScreenButton.swift; sourceTree = "<group>"; };
 		326655ED26A6BCB0008D8B32 /* BasicFunctionalityTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BasicFunctionalityTests.swift; sourceTree = "<group>"; };
 		326655EF26A6BD1E008D8B32 /* AdvancedInteractionTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AdvancedInteractionTests.swift; sourceTree = "<group>"; };
 		32BABEDD26A205E4002618A0 /* quizez-ios.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "quizez-ios.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		32BABEE026A205E4002618A0 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		32BABEE226A205E4002618A0 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
-		32BABEE426A205E4002618A0 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
+		32BABEE426A205E4002618A0 /* MainViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainViewController.swift; sourceTree = "<group>"; };
 		32BABEE726A205E4002618A0 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		32BABEE926A205E5002618A0 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		32BABEEC26A205E5002618A0 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
@@ -73,6 +87,7 @@
 		32CB7B0526A65D7900395F47 /* SocketIOService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SocketIOService.swift; sourceTree = "<group>"; };
 		32CB7B0726A65DB300395F47 /* SocketServiceDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SocketServiceDelegate.swift; sourceTree = "<group>"; };
 		32D4AD3126A75F2500858B83 /* ResponseTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ResponseTests.swift; sourceTree = "<group>"; };
+		32E29E7B26AA6DCC002090F8 /* Injector.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Injector.swift; sourceTree = "<group>"; };
 		32EF494D26A611E10099BE9C /* Response.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Response.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -81,7 +96,10 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				3298C89A26AA2820009CB54F /* RxRelay in Frameworks */,
+				3298C89126AA2330009CB54F /* RxCocoa in Frameworks */,
 				32BABF1226A20A0A002618A0 /* SocketIO in Frameworks */,
+				3298C89326AA2330009CB54F /* RxSwift in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -111,6 +129,15 @@
 			path = Quiz;
 			sourceTree = "<group>";
 		};
+		325495C126AA00930078E290 /* ViewModels */ = {
+			isa = PBXGroup;
+			children = (
+				325495C226AA01270078E290 /* MainViewModel.swift */,
+				325495C426AA01390078E290 /* ViewModel.swift */,
+			);
+			path = ViewModels;
+			sourceTree = "<group>";
+		};
 		326655EC26A6BC53008D8B32 /* SocketIOServiceTests */ = {
 			isa = PBXGroup;
 			children = (
@@ -120,6 +147,21 @@
 			path = SocketIOServiceTests;
 			sourceTree = "<group>";
 		};
+		3298C89626AA281D009CB54F /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		3298C89B26AA4E77009CB54F /* Injection */ = {
+			isa = PBXGroup;
+			children = (
+				32E29E7B26AA6DCC002090F8 /* Injector.swift */,
+			);
+			path = Injection;
+			sourceTree = "<group>";
+		};
 		32BABED426A205E4002618A0 = {
 			isa = PBXGroup;
 			children = (
@@ -127,6 +169,7 @@
 				32BABEF626A205E5002618A0 /* quizez-iosTests */,
 				32BABF0126A205E5002618A0 /* quizez-iosUITests */,
 				32BABEDE26A205E4002618A0 /* Products */,
+				3298C89626AA281D009CB54F /* Frameworks */,
 			);
 			sourceTree = "<group>";
 		};
@@ -143,15 +186,19 @@
 		32BABEDF26A205E4002618A0 /* quizez-ios */ = {
 			isa = PBXGroup;
 			children = (
+				3298C89B26AA4E77009CB54F /* Injection */,
+				325495C126AA00930078E290 /* ViewModels */,
+				32D4AD3326A7829F00858B83 /* Views */,
 				3248B7E826A3F884002A8660 /* Quiz */,
 				32BABF1326A20ADE002618A0 /* Network */,
 				32BABEE026A205E4002618A0 /* AppDelegate.swift */,
 				32BABEE226A205E4002618A0 /* SceneDelegate.swift */,
-				32BABEE426A205E4002618A0 /* ViewController.swift */,
+				32E29E7D26AA7874002090F8 /* Controllers */,
 				32BABEE626A205E4002618A0 /* Main.storyboard */,
 				32BABEE926A205E5002618A0 /* Assets.xcassets */,
 				32BABEEB26A205E5002618A0 /* LaunchScreen.storyboard */,
 				32BABEEE26A205E5002618A0 /* Info.plist */,
+				325495C926AA0F340078E290 /* AppSettings.swift */,
 			);
 			path = "quizez-ios";
 			sourceTree = "<group>";
@@ -198,6 +245,23 @@
 			path = Mocks;
 			sourceTree = "<group>";
 		};
+		32D4AD3326A7829F00858B83 /* Views */ = {
+			isa = PBXGroup;
+			children = (
+				3259F65F26A8F6FF0094C49A /* RoundedButton.swift */,
+				3259F66026A8F6FF0094C49A /* MainScreenButton.swift */,
+			);
+			path = Views;
+			sourceTree = "<group>";
+		};
+		32E29E7D26AA7874002090F8 /* Controllers */ = {
+			isa = PBXGroup;
+			children = (
+				32BABEE426A205E4002618A0 /* MainViewController.swift */,
+			);
+			path = Controllers;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -216,6 +280,9 @@
 			name = "quizez-ios";
 			packageProductDependencies = (
 				32BABF1126A20A0A002618A0 /* SocketIO */,
+				3298C89026AA2330009CB54F /* RxCocoa */,
+				3298C89226AA2330009CB54F /* RxSwift */,
+				3298C89926AA2820009CB54F /* RxRelay */,
 			);
 			productName = "quizez-ios";
 			productReference = 32BABEDD26A205E4002618A0 /* quizez-ios.app */;
@@ -290,6 +357,7 @@
 			mainGroup = 32BABED426A205E4002618A0;
 			packageReferences = (
 				32BABF1026A20A0A002618A0 /* XCRemoteSwiftPackageReference "socket" */,
+				3298C88F26AA2330009CB54F /* XCRemoteSwiftPackageReference "RxSwift" */,
 			);
 			productRefGroup = 32BABEDE26A205E4002618A0 /* Products */;
 			projectDirPath = "";
@@ -338,13 +406,19 @@
 				32BABF1B26A21E5F002618A0 /* SocketResponse.swift in Sources */,
 				3248B7EA26A3F88D002A8660 /* Question.swift in Sources */,
 				32CB7B0826A65DB300395F47 /* SocketServiceDelegate.swift in Sources */,
+				3259F66226A8F6FF0094C49A /* MainScreenButton.swift in Sources */,
 				32EF494E26A611E10099BE9C /* Response.swift in Sources */,
 				32BABF1926A20E93002618A0 /* SocketError.swift in Sources */,
-				32BABEE526A205E4002618A0 /* ViewController.swift in Sources */,
+				325495C326AA01270078E290 /* MainViewModel.swift in Sources */,
+				32BABEE526A205E4002618A0 /* MainViewController.swift in Sources */,
 				32BABEE126A205E4002618A0 /* AppDelegate.swift in Sources */,
+				32E29E7C26AA6DCC002090F8 /* Injector.swift in Sources */,
+				325495CA26AA0F340078E290 /* AppSettings.swift in Sources */,
+				325495C526AA01390078E290 /* ViewModel.swift in Sources */,
 				32BABF1526A20B09002618A0 /* SocketService.swift in Sources */,
 				32BABF2426A2B4B0002618A0 /* SocketRequest.swift in Sources */,
 				32BABEE326A205E4002618A0 /* SceneDelegate.swift in Sources */,
+				3259F66126A8F6FF0094C49A /* RoundedButton.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -390,7 +464,8 @@
 				32BABEE726A205E4002618A0 /* Base */,
 			);
 			name = Main.storyboard;
-			sourceTree = "<group>";
+			path = "quizez-ios";
+			sourceTree = SOURCE_ROOT;
 		};
 		32BABEEB26A205E5002618A0 /* LaunchScreen.storyboard */ = {
 			isa = PBXVariantGroup;
@@ -440,6 +515,7 @@
 				DEBUG_INFORMATION_FORMAT = dwarf;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
 				ENABLE_TESTABILITY = YES;
+				ENABLE_TESTING_SEARCH_PATHS = YES;
 				GCC_C_LANGUAGE_STANDARD = gnu11;
 				GCC_DYNAMIC_NO_PIC = NO;
 				GCC_NO_COMMON_BLOCKS = YES;
@@ -459,6 +535,7 @@
 				MTL_FAST_MATH = YES;
 				ONLY_ACTIVE_ARCH = YES;
 				SDKROOT = iphoneos;
+				SUPPORTED_PLATFORMS = "iphonesimulator iphoneos";
 				SWIFT_ACTIVE_COMPILATION_CONDITIONS = DEBUG;
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 			};
@@ -501,6 +578,7 @@
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				ENABLE_NS_ASSERTIONS = NO;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_TESTING_SEARCH_PATHS = YES;
 				GCC_C_LANGUAGE_STANDARD = gnu11;
 				GCC_NO_COMMON_BLOCKS = YES;
 				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
@@ -512,7 +590,9 @@
 				IPHONEOS_DEPLOYMENT_TARGET = 14.5;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				MTL_FAST_MATH = YES;
+				ONLY_ACTIVE_ARCH = NO;
 				SDKROOT = iphoneos;
+				SUPPORTED_PLATFORMS = "iphonesimulator iphoneos";
 				SWIFT_COMPILATION_MODE = wholemodule;
 				SWIFT_OPTIMIZATION_LEVEL = "-O";
 				VALIDATE_PRODUCT = YES;
@@ -524,14 +604,19 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = DD8KL3C325;
 				INFOPLIST_FILE = "quizez-ios/Info.plist";
+				IPHONEOS_DEPLOYMENT_TARGET = 14.5;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = "com.github.jtaylordev.quizez-ios";
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE_SPECIFIER = "";
+				SERVER_URL = "http://localhost:30000";
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
@@ -542,14 +627,19 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = DD8KL3C325;
 				INFOPLIST_FILE = "quizez-ios/Info.plist";
+				IPHONEOS_DEPLOYMENT_TARGET = 14.5;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = "com.github.jtaylordev.quizez-ios";
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE_SPECIFIER = "";
+				SERVER_URL = "";
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
@@ -560,7 +650,10 @@
 			buildSettings = {
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				BUNDLE_LOADER = "$(TEST_HOST)";
+				CODE_SIGN_IDENTITY = "Apple Development";
+				"CODE_SIGN_IDENTITY[sdk=macosx*]" = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = DD8KL3C325;
 				INFOPLIST_FILE = "quizez-iosTests/Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 14.5;
 				LD_RUNPATH_SEARCH_PATHS = (
@@ -570,6 +663,8 @@
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = "com.github.jtaylordev.quizez-iosTests";
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE_SPECIFIER = "";
+				"PROVISIONING_PROFILE_SPECIFIER[sdk=macosx*]" = "";
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/quizez-ios.app/quizez-ios";
@@ -581,7 +676,10 @@
 			buildSettings = {
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				BUNDLE_LOADER = "$(TEST_HOST)";
+				CODE_SIGN_IDENTITY = "Apple Development";
+				"CODE_SIGN_IDENTITY[sdk=macosx*]" = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = DD8KL3C325;
 				INFOPLIST_FILE = "quizez-iosTests/Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 14.5;
 				LD_RUNPATH_SEARCH_PATHS = (
@@ -591,6 +689,8 @@
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = "com.github.jtaylordev.quizez-iosTests";
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE_SPECIFIER = "";
+				"PROVISIONING_PROFILE_SPECIFIER[sdk=macosx*]" = "";
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/quizez-ios.app/quizez-ios";
@@ -601,7 +701,9 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
+				"CODE_SIGN_IDENTITY[sdk=macosx*]" = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = DD8KL3C325;
 				INFOPLIST_FILE = "quizez-iosUITests/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
@@ -621,6 +723,7 @@
 			buildSettings = {
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = DD8KL3C325;
 				INFOPLIST_FILE = "quizez-iosUITests/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
@@ -677,6 +780,14 @@
 /* End XCConfigurationList section */
 
 /* Begin XCRemoteSwiftPackageReference section */
+		3298C88F26AA2330009CB54F /* XCRemoteSwiftPackageReference "RxSwift" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/ReactiveX/RxSwift";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 6.0.0;
+			};
+		};
 		32BABF1026A20A0A002618A0 /* XCRemoteSwiftPackageReference "socket" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/socketio/socket.io-client-swift";
@@ -688,6 +799,21 @@
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
+		3298C89026AA2330009CB54F /* RxCocoa */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 3298C88F26AA2330009CB54F /* XCRemoteSwiftPackageReference "RxSwift" */;
+			productName = RxCocoa;
+		};
+		3298C89226AA2330009CB54F /* RxSwift */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 3298C88F26AA2330009CB54F /* XCRemoteSwiftPackageReference "RxSwift" */;
+			productName = RxSwift;
+		};
+		3298C89926AA2820009CB54F /* RxRelay */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 3298C88F26AA2330009CB54F /* XCRemoteSwiftPackageReference "RxSwift" */;
+			productName = RxRelay;
+		};
 		32BABF1126A20A0A002618A0 /* SocketIO */ = {
 			isa = XCSwiftPackageProductDependency;
 			package = 32BABF1026A20A0A002618A0 /* XCRemoteSwiftPackageReference "socket" */;
