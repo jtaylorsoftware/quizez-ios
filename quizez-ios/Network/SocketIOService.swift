@@ -37,8 +37,7 @@ final class SocketIOService : SocketService {
     
     init(url: String) throws {
         var config: SocketIOClientConfiguration = [.log(false)]
-        #if DEBUG
-        print("Enabling SocketIO debug logging")
+        #if LOG_SOCKETIO
         config = [.log(true)]
         #endif
         guard let socketUrl = URL(string: url) else {
