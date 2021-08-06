@@ -82,9 +82,9 @@ extension Question {
 }
 
 /// Types of Questions that can be used
-enum QuestionType: String, Encodable {
-    case multipleChoice = "MultipleChoice"
-    case fillInTheBlank = "FillIn"
+enum QuestionType: Int, Encodable {
+    case multipleChoice = 0
+    case fillInTheBlank
 }
 
 /// Constraints for validating a Question

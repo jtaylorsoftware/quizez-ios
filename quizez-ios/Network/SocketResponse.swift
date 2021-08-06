@@ -22,7 +22,7 @@ struct CreatedSession: SocketResponse {
     let session: String
     
     init?(json: [String : Any]) {
-        guard let id = json["id"] as? String else {
+        guard let id = json["session"] as? String else {
             return nil
         }
         self.session = id
@@ -96,7 +96,7 @@ class NextQuestion: SocketResponse {
               let question = json["question"] as? [String: Any],
               let text = question["text"] as? String,
               let rawBody = question["body"] as? [String: Any],
-              let rawType = rawBody["type"] as? String,
+              let rawType = rawBody["type"] as? Int,
               let questionType = QuestionType(rawValue: rawType) else {
             return nil
         }
