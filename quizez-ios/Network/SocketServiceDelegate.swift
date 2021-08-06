@@ -56,6 +56,14 @@ protocol SocketServiceDelegate {
     /// If this socket owns a session, it is receiving some user's graded response. The result will be `Result.failure` if
     /// the response data could not be parsed.
     func onQuestionResponseAdded(_ result: SocketResult<QuestionResponseAdded>)
+    
+    /// If this socket joined a session, it is receiving the result of submitting question feedback. The result will be `Result.failure` if
+    /// the response data could not be parsed, or if the request failed.
+    func onQuestionFeedbackSubmitted(_ result: SocketResult<FeedbackSubmitted>)
+    
+    /// If this socket owns a session, it is receiving some user's feedback for a question. The result will be `Result.failure` if
+    /// the response data could not be parsed.
+    func onQuestionFeedbackReceived(_ result: SocketResult<FeedbackReceived>)
 }
 
 extension SocketServiceDelegate {
@@ -71,6 +79,8 @@ extension SocketServiceDelegate {
     func onNextQuestion(_ result: SocketResult<NextQuestion>) {}
     func onQuestionResponseSubmitted(_ result: SocketResult<QuestionResponseSubmitted>) {}
     func onQuestionResponseAdded(_ result: SocketResult<QuestionResponseAdded>) {}
+    func onQuestionFeedbackSubmitted(_ result: SocketResult<FeedbackSubmitted>) {}
+    func onQuestionFeedbackReceived(_ result: SocketResult<FeedbackReceived>) {}
 }
 
 /// Utility class for default implementation

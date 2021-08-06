@@ -7,7 +7,8 @@
 
 import Foundation
 
-/// Errors that may occur when dealing with `SocketService`
+/// Errors that may occur when dealing with `SocketService`. Some are redundant (the event already indicates
+/// the error) but are presented to keep the API consistent.
 enum SocketError: Error {
     /// Invalid `URL` format when constructing `SocketService`
     case invalidUrl
@@ -59,4 +60,7 @@ enum SocketError: Error {
     
     /// Failed to respond to question
     case responseSubmissionFailed
+    
+    /// Failed to submit feedback
+    case submitFeedbackFailed
 }

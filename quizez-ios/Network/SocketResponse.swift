@@ -210,3 +210,49 @@ struct QuestionResponseAdded : SocketResponse {
         self.relativeFrequency = relativeFrequency
     }
 }
+
+/// The user is receiving confirmation of their feedback submission
+struct FeedbackSubmitted : SocketResponse {
+    /// The id of the session
+    let session: String
+    
+    init?(json: [String : Any]) {
+        guard let session = json["session"] as? String else {
+            return nil
+        }
+        
+        self.session = session
+    }
+}
+
+/// The Session owner is receiving feedback for a Question from a user
+struct FeedbackReceived : SocketResponse {
+    /// The id of the session
+    let session: String
+    
+    /// The name of the user submitting feedback
+    let user: String
+    
+    /// The index of the question the feedback is for
+    let question: Int
+    
+    /// The user's feedback
+    let feedback: Feedback
+    
+    init?(json: [String : Any]) {
+        guard let session = json["session"] as? String,
+              let user = json["user"] as? String,
+              let question = json["question"] as? Int,
+              let rawFeedback = json["feedback"] as? [String: Any],
+              let rawRating = rawFeedback["rating"] as? Int,
+              let rating = Feedback.Rating(rawValue: rawRating),
+              let message = rawFeedback["message"] as? String else {
+            return nil
+        }
+        
+        self.session = session
+        self.user = user
+        self.question = question
+        self.feedback = Feedback(rating: rating, message: message)
+    }
+}

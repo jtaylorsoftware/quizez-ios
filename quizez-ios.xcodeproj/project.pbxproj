@@ -9,6 +9,8 @@
 /* Begin PBXBuildFile section */
 		3248B7EA26A3F88D002A8660 /* Question.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3248B7E926A3F88D002A8660 /* Question.swift */; };
 		3248B7EC26A4058F002A8660 /* QuestionTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3248B7EB26A4058F002A8660 /* QuestionTests.swift */; };
+		3250B02826BDE884002C5377 /* Feedback.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3250B02726BDE884002C5377 /* Feedback.swift */; };
+		3250B02A26BDFE8B002C5377 /* QuestionInteractionTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3250B02926BDFE8B002C5377 /* QuestionInteractionTests.swift */; };
 		325495C326AA01270078E290 /* MainViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 325495C226AA01270078E290 /* MainViewModel.swift */; };
 		325495C526AA01390078E290 /* ViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 325495C426AA01390078E290 /* ViewModel.swift */; };
 		325495CA26AA0F340078E290 /* AppSettings.swift in Sources */ = {isa = PBXBuildFile; fileRef = 325495C926AA0F340078E290 /* AppSettings.swift */; };
@@ -59,6 +61,8 @@
 /* Begin PBXFileReference section */
 		3248B7E926A3F88D002A8660 /* Question.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Question.swift; sourceTree = "<group>"; };
 		3248B7EB26A4058F002A8660 /* QuestionTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QuestionTests.swift; sourceTree = "<group>"; };
+		3250B02726BDE884002C5377 /* Feedback.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Feedback.swift; sourceTree = "<group>"; };
+		3250B02926BDFE8B002C5377 /* QuestionInteractionTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QuestionInteractionTests.swift; sourceTree = "<group>"; };
 		325495C226AA01270078E290 /* MainViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainViewModel.swift; sourceTree = "<group>"; };
 		325495C426AA01390078E290 /* ViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewModel.swift; sourceTree = "<group>"; };
 		325495C926AA0F340078E290 /* AppSettings.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppSettings.swift; sourceTree = "<group>"; };
@@ -125,6 +129,7 @@
 			children = (
 				3248B7E926A3F88D002A8660 /* Question.swift */,
 				32EF494D26A611E10099BE9C /* Response.swift */,
+				3250B02726BDE884002C5377 /* Feedback.swift */,
 			);
 			path = Quiz;
 			sourceTree = "<group>";
@@ -143,6 +148,7 @@
 			children = (
 				326655ED26A6BCB0008D8B32 /* BasicFunctionalityTests.swift */,
 				326655EF26A6BD1E008D8B32 /* AdvancedInteractionTests.swift */,
+				3250B02926BDFE8B002C5377 /* QuestionInteractionTests.swift */,
 			);
 			path = SocketIOServiceTests;
 			sourceTree = "<group>";
@@ -404,6 +410,7 @@
 			files = (
 				32CB7B0626A65D7900395F47 /* SocketIOService.swift in Sources */,
 				32BABF1B26A21E5F002618A0 /* SocketResponse.swift in Sources */,
+				3250B02826BDE884002C5377 /* Feedback.swift in Sources */,
 				3248B7EA26A3F88D002A8660 /* Question.swift in Sources */,
 				32CB7B0826A65DB300395F47 /* SocketServiceDelegate.swift in Sources */,
 				3259F66226A8F6FF0094C49A /* MainScreenButton.swift in Sources */,
@@ -430,6 +437,7 @@
 				3248B7EC26A4058F002A8660 /* QuestionTests.swift in Sources */,
 				326655F026A6BD1E008D8B32 /* AdvancedInteractionTests.swift in Sources */,
 				326655EE26A6BCB0008D8B32 /* BasicFunctionalityTests.swift in Sources */,
+				3250B02A26BDFE8B002C5377 /* QuestionInteractionTests.swift in Sources */,
 				32BABF2126A24FFF002618A0 /* SocketServiceDelegateMock.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

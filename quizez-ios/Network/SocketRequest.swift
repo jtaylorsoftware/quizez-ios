@@ -150,3 +150,38 @@ class SubmitResponseRequest: SocketRequest {
         case response
     }
 }
+
+/// Socket submits feedback for a question
+class SubmitFeedbackRequest: SocketRequest {
+    static let eventKey: String = "submit feedback"
+    
+    var session: String
+    
+    /// The name of the user submitting
+    let name: String
+    
+    /// The Question index to submit to
+    let question: Int
+    
+    /// The user's feedback
+    let feedback: Feedback
+    
+    init(name: String, question: Int, feedback: Feedback, session: String = "") {
+        self.session = session
+        self.name = name
+        self.question = question
+        self.feedback = feedback
+    }
+    
+    func encode(to encoder: Encoder) throws {
+        var container = encoder.container(keyedBy: CodingKeys.self)
+        try container.encode(session, forKey: .session)
+        try container.encode(name, forKey: .name)
+        try container.encode(question, forKey: .question)
+        try container.encode(feedback, forKey: .feedback)
+    }
+    
+    enum CodingKeys: String, CodingKey {
+        case session, name, question, feedback
+    }
+}

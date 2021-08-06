@@ -99,6 +99,14 @@ protocol SocketService {
     ///     - `SocketError.sessionNotStarted` if session has not started
     ///     - `SocketError.sessionEnded` if session has ended
     func submitQuestionResponse(_ request: SubmitResponseRequest) throws
+    
+    /// Sends feedback for a question if this socket has joined a session.
+    /// - Throws:
+    ///     - `SocketError.notConnected` if not connected
+    ///     - `SocketError.didNotJoinSession` if the user is the owner, rather than a joiner, of a session
+    ///     - `SocketError.sessionNotStarted` if session has not started
+    ///     - `SocketError.sessionEnded` if session has ended
+    func submitQuestionFeedback(_ request: SubmitFeedbackRequest) throws
 }
 
 extension SocketService {
