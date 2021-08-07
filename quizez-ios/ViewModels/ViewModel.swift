@@ -15,7 +15,7 @@ enum FailureReason: String, Error {
     case couldNotConnect = "The app could not connect to the service."
     case notConnected = "The app is not connected to the service."
     case alreadyInSession = "You already joined or created a session."
-    case couldNotJoin = ""
+    case couldNotJoin = "Could not join session."
     case badServerResponse = "Bad response from server."
     case unknown = "Unknown error."
 }
