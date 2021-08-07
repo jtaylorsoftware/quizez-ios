@@ -11,6 +11,7 @@
 		3248B7EC26A4058F002A8660 /* QuestionTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3248B7EB26A4058F002A8660 /* QuestionTests.swift */; };
 		3250B02826BDE884002C5377 /* Feedback.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3250B02726BDE884002C5377 /* Feedback.swift */; };
 		3250B02A26BDFE8B002C5377 /* QuestionInteractionTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3250B02926BDFE8B002C5377 /* QuestionInteractionTests.swift */; };
+		3250B02D26BE066B002C5377 /* AlertFailure.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3250B02C26BE066B002C5377 /* AlertFailure.swift */; };
 		325495C326AA01270078E290 /* MainViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 325495C226AA01270078E290 /* MainViewModel.swift */; };
 		325495C526AA01390078E290 /* ViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 325495C426AA01390078E290 /* ViewModel.swift */; };
 		325495CA26AA0F340078E290 /* AppSettings.swift in Sources */ = {isa = PBXBuildFile; fileRef = 325495C926AA0F340078E290 /* AppSettings.swift */; };
@@ -63,6 +64,7 @@
 		3248B7EB26A4058F002A8660 /* QuestionTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QuestionTests.swift; sourceTree = "<group>"; };
 		3250B02726BDE884002C5377 /* Feedback.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Feedback.swift; sourceTree = "<group>"; };
 		3250B02926BDFE8B002C5377 /* QuestionInteractionTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QuestionInteractionTests.swift; sourceTree = "<group>"; };
+		3250B02C26BE066B002C5377 /* AlertFailure.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AlertFailure.swift; sourceTree = "<group>"; };
 		325495C226AA01270078E290 /* MainViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainViewModel.swift; sourceTree = "<group>"; };
 		325495C426AA01390078E290 /* ViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewModel.swift; sourceTree = "<group>"; };
 		325495C926AA0F340078E290 /* AppSettings.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppSettings.swift; sourceTree = "<group>"; };
@@ -132,6 +134,14 @@
 				3250B02726BDE884002C5377 /* Feedback.swift */,
 			);
 			path = Quiz;
+			sourceTree = "<group>";
+		};
+		3250B02B26BE065D002C5377 /* Util */ = {
+			isa = PBXGroup;
+			children = (
+				3250B02C26BE066B002C5377 /* AlertFailure.swift */,
+			);
+			path = Util;
 			sourceTree = "<group>";
 		};
 		325495C126AA00930078E290 /* ViewModels */ = {
@@ -263,6 +273,7 @@
 		32E29E7D26AA7874002090F8 /* Controllers */ = {
 			isa = PBXGroup;
 			children = (
+				3250B02B26BE065D002C5377 /* Util */,
 				32BABEE426A205E4002618A0 /* MainViewController.swift */,
 			);
 			path = Controllers;
@@ -408,6 +419,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				3250B02D26BE066B002C5377 /* AlertFailure.swift in Sources */,
 				32CB7B0626A65D7900395F47 /* SocketIOService.swift in Sources */,
 				32BABF1B26A21E5F002618A0 /* SocketResponse.swift in Sources */,
 				3250B02826BDE884002C5377 /* Feedback.swift in Sources */,
