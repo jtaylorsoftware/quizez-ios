@@ -65,9 +65,6 @@ class MainViewController: UIViewController {
     }
     
     @IBAction func joinPressed(_ sender: UIButton) {
-        guard sessionCode.count == AppSettings.shared.codeLength else {
-            return
-        }
         viewModel?.joinSession(session: sessionCode, name: name)
     }
     

@@ -66,6 +66,10 @@ final class MainViewModel: ViewModel {
     ///     - session: Session code to join
     ///     - name: Display name to use
     func joinSession(session: String, name: String) {
+        guard session.count == AppSettings.shared.codeLength else {
+            return
+        }
+        
         do {
             try socketService.joinSession(JoinSessionRequest(session: session, name: name))
         } catch SocketError.notConnected {
