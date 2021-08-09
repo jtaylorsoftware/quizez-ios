@@ -64,7 +64,7 @@ class AdvancedInteractionTests: XCTestCase {
         joinerDelegate.ended = expectation(description: "Socket sessionJoiner receives ended event")
         creatorDelegate.started = expectation(description: "Socket starts session")
         creatorDelegate.ended = expectation(description: "Socket can end session")
-  
+        
         try sessionCreator.startSession()
         wait(for: [creatorDelegate.started!], timeout: 5.0)
         
@@ -81,8 +81,8 @@ class AdvancedInteractionTests: XCTestCase {
     
     func testSocketIOService_IfCreatedSession_CanAddQuestion() throws {
         creatorDelegate.questionAdded = expectation(description: "Socket client can add question to the session")
-
-        let question = Question(text: "Question", body: .fillInTheBlank(answer: "Yes"))
+        
+        let question = Question(text: "Question", body: .fillInTheBlank(answers: [.init(text: "Yes", points: 100)]))
         try sessionCreator.addQuestion(AddQuestionRequest(question: question))
         wait(for: [creatorDelegate.questionAdded!], timeout: 5.0)
     }
@@ -90,7 +90,7 @@ class AdvancedInteractionTests: XCTestCase {
     func testSocketIOService_IfCreatedSession_CanSendNextFillInQuestion() throws {
         // Add fillin question
         creatorDelegate.questionAdded = expectation(description: "Socket client addd question to the session")
-        let fillInQuestion = Question(text: "Question", body: .fillInTheBlank(answer: "Yes"))
+        let fillInQuestion = Question(text: "Question", body: .fillInTheBlank(answers: [.init(text: "Yes", points: 100)]))
         try sessionCreator.addQuestion(AddQuestionRequest(question: fillInQuestion))
         wait(for: [creatorDelegate.questionAdded!], timeout: 5.0)
         
@@ -109,7 +109,7 @@ class AdvancedInteractionTests: XCTestCase {
     func testSocketIOService_IfCreatedSession_CanSendNextMultipleChoiceQuestion() throws {
         // Add mc question
         creatorDelegate.questionAdded = expectation(description: "Socket client addd question to the session")
-        let mcQuestion = Question(text: "Question", body: .multipleChoice(choices: [.init(text: "1"), .init(text: "2")], answer: 1))
+        let mcQuestion = Question(text: "Question", body: .multipleChoice(choices: [.init(text: "1", points: 100), .init(text: "2", points: 200)], answer: 1))
         try sessionCreator.addQuestion(AddQuestionRequest(question: mcQuestion))
         wait(for: [creatorDelegate.questionAdded!], timeout: 5.0)
         

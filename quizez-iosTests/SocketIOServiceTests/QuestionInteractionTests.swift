@@ -47,7 +47,7 @@ class QuestionInteractionTests: XCTestCase {
         
         // Add question
         creatorDelegate.questionAdded = expectation(description: "Socket client addd question to the session")
-        let fillInQuestion = Question(text: "Question", body: .fillInTheBlank(answer: "Yes"))
+        let fillInQuestion = Question(text: "Question", body: .fillInTheBlank(answers: [.init(text: "Yes", points: 100)]))
         try sessionCreator.addQuestion(AddQuestionRequest(question: fillInQuestion))
         wait(for: [creatorDelegate.questionAdded!], timeout: 5.0)
         

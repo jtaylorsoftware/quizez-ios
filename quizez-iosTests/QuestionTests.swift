@@ -10,7 +10,7 @@ import XCTest
 
 class QuestionTests: XCTestCase {
     func testQuestion_MultipleChoice_AllInvalidProperties_ValidateContainsAllErrors() {
-        let question = Question(text: "", body: .multipleChoice(choices: [.init(text: "")], answer: -1))
+        let question = Question(text: "", timeLimit: -1, body: .multipleChoice(choices: [.init(text: "", points: -1)], answer: -1))
         let failedConstraints = question.validate()
         
         XCTAssertFalse(failedConstraints.isEmpty)
@@ -18,10 +18,13 @@ class QuestionTests: XCTestCase {
         XCTAssertTrue(failedConstraints.contains(.choiceTextNotEmpty(index: 0)))
         XCTAssertTrue(failedConstraints.contains(.textNotEmpty))
         XCTAssertTrue(failedConstraints.contains(.choicesInExpectedRange))
+        XCTAssertTrue(failedConstraints.contains(.pointsNotNegative(index: 0)))
+        XCTAssertTrue(failedConstraints.contains(.totalPointsInExpectedRange))
+        XCTAssertTrue(failedConstraints.contains(.timeLimitInExpectedRange))
     }
     
     func testQuestion_MultipleChoice_OneChoices_ValidateContainsChoicesInExpectedRange() {
-        let question = Question(text: "Text", body: .multipleChoice(choices: [.init(text: "Text")], answer: 0))
+        let question = Question(text: "Text", body: .multipleChoice(choices: [.init(text: "Text", points: 100)], answer: 0))
         let failedConstraints = question.validate()
         
         XCTAssertFalse(failedConstraints.isEmpty)
@@ -29,7 +32,7 @@ class QuestionTests: XCTestCase {
     }
     
     func testQuestion_MultipleChoice_FiveChoices_ValidateContainsChoicesInExpectedRange() {
-        let choices = (0..<5).map { Question.Body.Choice(text: String($0)) }
+        let choices = (0..<5).map { Question.Body.Choice(text: String($0), points: $0 * 100) }
         let question = Question(text: "Text", body: .multipleChoice(choices: choices, answer: 0))
         let failedConstraints = question.validate()
         
@@ -38,7 +41,7 @@ class QuestionTests: XCTestCase {
     }
     
     func testQuestion_MultipleChoice_NegativeAnswer_ValidateContainsAnswerWithinBounds() {
-        let choices = (0..<4).map { Question.Body.Choice(text: String($0)) }
+        let choices = (0..<4).map { Question.Body.Choice(text: String($0), points: $0 * 100) }
         let question = Question(text: "Text", body: .multipleChoice(choices: choices, answer: -1))
         let failedConstraints = question.validate()
         
@@ -47,7 +50,7 @@ class QuestionTests: XCTestCase {
     }
     
     func testQuestion_MultipleChoice_OutOfBoundsAnswer_ValidateContainsAnswerWithinBounds() {
-        let choices = (0..<4).map { Question.Body.Choice(text: String($0)) }
+        let choices = (0..<4).map { Question.Body.Choice(text: String($0), points: $0 * 100) }
         let question = Question(text: "Text", body: .multipleChoice(choices: choices, answer: choices.count))
         let failedConstraints = question.validate()
         
@@ -56,7 +59,7 @@ class QuestionTests: XCTestCase {
     }
     
     func testQuestion_MultipleChoice_AllValid_ValidatePasses() {
-        let choices = (0..<4).map { Question.Body.Choice(text: String($0)) }
+        let choices = (0..<4).map { Question.Body.Choice(text: String($0), points: $0 * 100) }
         let question = Question(text: "Text", body: .multipleChoice(choices: choices, answer: 1))
         let failedConstraints = question.validate()
         
@@ -64,16 +67,19 @@ class QuestionTests: XCTestCase {
     }
     
     func testQuestion_FillIn_AllInvalid_ValidateContainsAllErrors() {
-        let question = Question(text: "", body: .fillInTheBlank(answer: ""))
+        let question = Question(text: "", timeLimit: -1, body: .fillInTheBlank(answers: [.init(text: "", points: -1)]))
         let failedConstraints = question.validate()
         
         XCTAssertFalse(failedConstraints.isEmpty)
         XCTAssertTrue(failedConstraints.contains(.textNotEmpty))
-        XCTAssertTrue(failedConstraints.contains(.answerTextNotEmpty))
+        XCTAssertTrue(failedConstraints.contains(.answerTextNotEmpty(index: 0)))
+        XCTAssertTrue(failedConstraints.contains(.pointsNotNegative(index: 0)))
+        XCTAssertTrue(failedConstraints.contains(.totalPointsInExpectedRange))
+        XCTAssertTrue(failedConstraints.contains(.timeLimitInExpectedRange))
     }
     
     func testQuestion_FillIn_AllValid_ValidatePasses() {
-        let question = Question(text: "Text", body: .fillInTheBlank(answer: "Answer"))
+        let question = Question(text: "Text", body: .fillInTheBlank(answers: [.init(text: "Text", points: 100)]))
         let failedConstraints = question.validate()
         
         XCTAssertTrue(failedConstraints.isEmpty)

@@ -95,6 +95,8 @@ class NextQuestion: SocketResponse {
               let index = json["index"] as? Int,
               let question = json["question"] as? [String: Any],
               let text = question["text"] as? String,
+              let timeLimit = question["timeLimit"] as? Int,
+              let totalPoints = question["totalPoints"] as? Int,
               let rawBody = question["body"] as? [String: Any],
               let rawType = rawBody["type"] as? Int,
               let questionType = QuestionType(rawValue: rawType) else {
@@ -116,21 +118,34 @@ class NextQuestion: SocketResponse {
             
             var choices: [Question.Body.Choice] = []
             for rawChoice in rawChoices {
-                guard let text = rawChoice["text"] as? String else {
+                guard let text = rawChoice["text"] as? String,
+                      let points = rawChoice["points"] as? Int
+                else {
                     return nil
                 }
-                choices.append(.init(text: text))
+                choices.append(.init(text: text, points: points))
             }
             
             questionBody = Question.Body.multipleChoice(choices: choices, answer: answer)
         case .fillInTheBlank:
-            guard let answer = rawBody["answer"] as? String else {
+            guard let rawAnswers = rawBody["answers"] as? [[String: Any]] else {
                 return nil
             }
-            questionBody = Question.Body.fillInTheBlank(answer: answer)
+            
+            var answers: [Question.Body.Answer] = []
+            for rawAnswer in rawAnswers {
+                guard let text = rawAnswer["text"] as? String,
+                      let points = rawAnswer["points"] as? Int
+                else {
+                    return nil
+                }
+                answers.append(.init(text: text, points: points))
+            }
+            
+            questionBody = Question.Body.fillInTheBlank(answers: answers)
         }
         
-        self.question = Question(text: text, body: questionBody)
+        self.question = Question(text: text, timeLimit: timeLimit, body: questionBody)
     }
 }
 
@@ -144,21 +159,21 @@ struct QuestionResponseSubmitted : SocketResponse {
     /// True if the user was the first to submit the correct response
     let firstCorrect: Bool
     
-    /// True if the user's submission was the correct answer
-    let isCorrect: Bool
+    /// Points earned for the answer
+    let points: Int
     
     init?(json: [String : Any]) {
         guard let session = json["session"] as? String,
               let index = json["index"] as? Int,
               let firstCorrect = json["firstCorrect"] as? Bool,
-              let isCorrect = json["isCorrect"] as? Bool else {
+              let points = json["points"] as? Int else {
             return nil
         }
         
         self.session = session
         self.index = index
         self.firstCorrect = firstCorrect
-        self.isCorrect = isCorrect
+        self.points = points
     }
 }
 
@@ -176,12 +191,12 @@ struct QuestionResponseAdded : SocketResponse {
     /// The user's response value
     let response: String
     
-    /// True if the user's Response is correct
-    let isCorrect: Bool
+    /// Points the user received for their response
+    let points: Int
     
     /// Name of the first correct responder
     let firstCorrect: String
-
+    
     /// The frequency of the user's response at the time of submission
     let frequency: Int
     
@@ -193,7 +208,7 @@ struct QuestionResponseAdded : SocketResponse {
               let index = json["index"] as? Int,
               let user = json["user"] as? String,
               let response = json["response"] as? String,
-              let isCorrect = json["isCorrect"] as? Bool,
+              let points = json["points"] as? Int,
               let firstCorrect = json["firstCorrect"] as? String,
               let frequency = json["frequency"] as? Int,
               let relativeFrequency = json["relativeFrequency"] as? Int else {
@@ -204,7 +219,7 @@ struct QuestionResponseAdded : SocketResponse {
         self.index = index
         self.user = user
         self.response = response
-        self.isCorrect = isCorrect
+        self.points = points
         self.firstCorrect = firstCorrect
         self.frequency = frequency
         self.relativeFrequency = relativeFrequency

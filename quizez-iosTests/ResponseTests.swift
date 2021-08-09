@@ -10,7 +10,7 @@ import XCTest
 
 class ResponseTests: XCTestCase {
     // A valid multiple choice question
-    let mcQuestion = Question(text: "Q1", body: .multipleChoice(choices: [.init(text: "C1"), .init(text: "C2")], answer: 1))
+    let mcQuestion = Question(text: "Q1", body: .multipleChoice(choices: [.init(text: "C1", points: 100), .init(text: "C2", points: 100)], answer: 1))
     
     func testResponse_MultipleChoice_AllInvalidProperties_ValidateContainsAllErrors() {
         
