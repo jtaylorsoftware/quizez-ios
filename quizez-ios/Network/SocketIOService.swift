@@ -343,7 +343,7 @@ final class SocketIOService : SocketService {
                     self?.delegate.onQuestionResponseAdded(.success(questionResponseAdded))
                 }
             } else {
-                self?.delegate.onQuestionResponseSubmitted(.failure(.unexpectedResponseData))
+                self?.delegate.onQuestionResponseAdded(.failure(.unexpectedResponseData))
             }
         }
         
