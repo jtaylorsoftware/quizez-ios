@@ -63,4 +63,7 @@ enum SocketError: Error {
     
     /// Failed to submit feedback
     case submitFeedbackFailed
+    
+    /// Failed to send hint
+    case sendHintFailed
 }

@@ -19,6 +19,9 @@ class QuestionInteractionTests: XCTestCase {
     }
     
     override func setUpWithError() throws {
+        // Setup for Question tests by creating a session, adding a question, starting
+        // and pushing the next question. That way there's data to work with.
+        
         try super.setUpWithError()
         sessionCreator = try SocketIOService(url: "http://localhost:30000")
         creatorDelegate = SocketServiceDelegateMock()
@@ -46,19 +49,19 @@ class QuestionInteractionTests: XCTestCase {
         wait(for: [joinerDelegate.joined!], timeout: 5.0)
         
         // Add question
-        creatorDelegate.questionAdded = expectation(description: "Socket client addd question to the session")
+        creatorDelegate.questionAdded = expectation(description: "Setup - Socket client adds question to the session")
         let fillInQuestion = Question(text: "Question", body: .fillInTheBlank(answers: [.init(text: "Yes", points: 100)]))
         try sessionCreator.addQuestion(AddQuestionRequest(question: fillInQuestion))
         wait(for: [creatorDelegate.questionAdded!], timeout: 5.0)
         
         // Start session
-        creatorDelegate.started = expectation(description: "Socket client starts session")
+        creatorDelegate.started = expectation(description: "Setup - Socket client starts session")
         try sessionCreator.startSession()
         wait(for: [creatorDelegate.started!], timeout: 5.0)
         
         // Push next question
-        creatorDelegate.nextQuestion = expectation(description: "Session creator receives next question event")
-        joinerDelegate.nextQuestion = expectation(description: "Socket sessionJoiner receives next question event")
+        creatorDelegate.nextQuestion = expectation(description: "Setup - Session creator receives next question event")
+        joinerDelegate.nextQuestion = expectation(description: "Setup - Socket sessionJoiner receives next question event")
         try sessionCreator.pushNextQuestion()
         wait(for: [creatorDelegate.nextQuestion!, joinerDelegate.nextQuestion!], timeout: 5.0)
     }
@@ -96,10 +99,30 @@ class QuestionInteractionTests: XCTestCase {
     func testSocketIOService_IfCreatedSession_ReceivesSubmittedFeedback() throws {
         // Send feedback
         let feedback = Feedback(rating: .Easy, message: "")
-        creatorDelegate.feedbackReceived = expectation(description: "Socket sessionJoiner receives the feedback submitted to the question")
+        creatorDelegate.feedbackReceived = expectation(description: "Socket sessionCreator receives the feedback submitted to the question")
         try sessionJoiner.submitQuestionFeedback(SubmitFeedbackRequest(name: joinerUsername, question: 0, feedback: feedback))
         
         // Check session creator receives response
         wait(for: [creatorDelegate.feedbackReceived!], timeout: 5.0)
+    }
+    
+    func testSocketIOService_IfCreatedSession_CanSendQuestionHint() throws {
+        // Send hint
+        let hint = "Question Hint"
+        creatorDelegate.hintSubmitted = expectation(description: "Socket sessionCreator can send hint for the question")
+        try sessionCreator.sendQuestionHint(SendHintRequest(question: 0, hint: hint))
+        
+        // Check owner's hint submission worked
+        wait(for: [creatorDelegate.hintSubmitted!], timeout: 5.0)
+    }
+    
+    func testSocketIOService_ReceivesSubmittedHint() throws {
+        // Send hint
+        let hint = "Question Hint"
+        joinerDelegate.hintReceived = expectation(description: "Socket sessionJoiner receives the hint submitted for the question")
+        try sessionCreator.sendQuestionHint(SendHintRequest(question: 0, hint: hint))
+        
+        // Check session joiner receives hint
+        wait(for: [joinerDelegate.hintReceived!], timeout: 5.0)
     }
 }

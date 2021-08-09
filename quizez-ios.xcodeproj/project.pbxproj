@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		32360FBE26C0D75C00E5208A /* Hint.swift in Sources */ = {isa = PBXBuildFile; fileRef = 32360FBD26C0D75B00E5208A /* Hint.swift */; };
 		3248B7EA26A3F88D002A8660 /* Question.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3248B7E926A3F88D002A8660 /* Question.swift */; };
 		3248B7EC26A4058F002A8660 /* QuestionTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3248B7EB26A4058F002A8660 /* QuestionTests.swift */; };
 		3250B02826BDE884002C5377 /* Feedback.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3250B02726BDE884002C5377 /* Feedback.swift */; };
@@ -60,6 +61,7 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		32360FBD26C0D75B00E5208A /* Hint.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Hint.swift; sourceTree = "<group>"; };
 		3248B7E926A3F88D002A8660 /* Question.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Question.swift; sourceTree = "<group>"; };
 		3248B7EB26A4058F002A8660 /* QuestionTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QuestionTests.swift; sourceTree = "<group>"; };
 		3250B02726BDE884002C5377 /* Feedback.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Feedback.swift; sourceTree = "<group>"; };
@@ -132,6 +134,7 @@
 				3248B7E926A3F88D002A8660 /* Question.swift */,
 				32EF494D26A611E10099BE9C /* Response.swift */,
 				3250B02726BDE884002C5377 /* Feedback.swift */,
+				32360FBD26C0D75B00E5208A /* Hint.swift */,
 			);
 			path = Quiz;
 			sourceTree = "<group>";
@@ -419,6 +422,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				32360FBE26C0D75C00E5208A /* Hint.swift in Sources */,
 				3250B02D26BE066B002C5377 /* AlertFailure.swift in Sources */,
 				32CB7B0626A65D7900395F47 /* SocketIOService.swift in Sources */,
 				32BABF1B26A21E5F002618A0 /* SocketResponse.swift in Sources */,

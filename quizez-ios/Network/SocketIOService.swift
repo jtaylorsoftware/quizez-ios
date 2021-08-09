@@ -198,6 +198,23 @@ final class SocketIOService : SocketService {
         socket.emit(SubmitFeedbackRequest.eventKey, request.forSession(session: session))
     }
     
+    func sendQuestionHint(_ request: SendHintRequest) throws {
+        guard connected else {
+            throw SocketError.notConnected
+        }
+        guard sessionInfo.isSessionOwner, let session = sessionInfo.sessionId else {
+            throw SocketError.notSessionOwner
+        }
+        guard sessionInfo.sessionHasStarted else {
+            throw SocketError.sessionNotStarted
+        }
+        guard !sessionInfo.sessionHasEnded else {
+            throw SocketError.sessionEnded
+        }
+        
+        socket.emit(SendHintRequest.eventKey, request.forSession(session: session))
+    }
+    
     private func registerHandlers() {
         // This socket's connection
         socket.on(clientEvent: .connect) { [weak self] data, _ in
@@ -373,6 +390,33 @@ final class SocketIOService : SocketService {
                 self?.delegate.onQuestionFeedbackReceived(.failure(.unexpectedResponseData))
             }
         }
+        
+        // Session owner receiving confirmation of hint
+        socket.on(SocketEvent.sendHintSuccess.rawValue){ [weak self] data, _ in
+            if let hintSubmitted: HintSubmitted = Self.readResponseFromData(from: data[0]) {
+                if hintSubmitted.session == self?.sessionId {
+                    self?.delegate.onQuestionHintSubmitted(.success(hintSubmitted))
+                }
+            } else {
+                self?.delegate.onQuestionHintSubmitted(.failure(.unexpectedResponseData))
+            }
+        }
+        
+        // Sending hint failed
+        socket.on(SocketEvent.sendHintFailed.rawValue){ [weak self] data, _ in
+            self?.delegate.onQuestionHintSubmitted(.failure(.sendHintFailed))
+        }
+        
+        // User receiving hint for a question
+        socket.on(SocketEvent.hintReceived.rawValue){ [weak self] data, _ in
+            if let hintReceived: HintReceived = Self.readResponseFromData(from: data[0]) {
+                if hintReceived.session == self?.sessionId {
+                    self?.delegate.onQuestionHintReceived(.success(hintReceived))
+                }
+            } else {
+                self?.delegate.onQuestionHintReceived(.failure(.unexpectedResponseData))
+            }
+        }
     }
     
     private static func readResponseFromData<T: SocketResponse>(from data: Any) -> T? {
@@ -419,6 +463,13 @@ final class SocketIOService : SocketService {
         
         // Session creator received feedback
         case feedbackReceived = "feedback submitted"
+        
+        // Sending hint succeeded or failed
+        case sendHintSuccess = "send hint success"
+        case sendHintFailed = "send hint failed"
+        
+        // User receiving hint
+        case hintReceived = "hint received"
     }
     
     private struct SessionInfo {

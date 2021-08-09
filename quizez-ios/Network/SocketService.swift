@@ -107,6 +107,14 @@ protocol SocketService {
     ///     - `SocketError.sessionNotStarted` if session has not started
     ///     - `SocketError.sessionEnded` if session has ended
     func submitQuestionFeedback(_ request: SubmitFeedbackRequest) throws
+    
+    /// Sends a hint for a question if this socket created a session.
+    /// - Throws:
+    ///     - `SocketError.notConnected` if not connected
+    ///     - `SocketError.notSessionOwner` if not the owner of a session
+    ///     - `SocketError.sessionNotStarted` if session has not started
+    ///     - `SocketError.sessionEnded` if session has ended
+    func sendQuestionHint(_ request: SendHintRequest) throws
 }
 
 extension SocketService {

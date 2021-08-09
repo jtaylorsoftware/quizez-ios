@@ -271,3 +271,41 @@ struct FeedbackReceived : SocketResponse {
         self.feedback = Feedback(rating: rating, message: message)
     }
 }
+
+/// The session owner is receiving confirmation that their question hint sent.
+struct HintSubmitted: SocketResponse {
+    /// The id of the session
+    let session: String
+    
+    init?(json: [String : Any]) {
+        guard let session = json["session"] as? String else {
+            return nil
+        }
+        self.session = session
+    }
+}
+
+/// A user in a session is receiving a hint for the current question
+struct HintReceived: SocketResponse {
+    /// The id of the session
+    let session: String
+    
+    /// The index of question the hint is for
+    let question: Int
+    
+    /// The hint message
+    let hint: String
+    
+    init?(json: [String : Any]) {
+        guard let session = json["session"] as? String,
+              let question = json["question"] as? Int,
+              let hint = json["hint"] as? String
+        else {
+            return nil
+        }
+        
+        self.session = session
+        self.question = question
+        self.hint = hint
+    }
+}

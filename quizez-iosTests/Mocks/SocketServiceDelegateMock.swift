@@ -25,6 +25,8 @@ class SocketServiceDelegateMock: SocketServiceDelegate {
     var responseAdded: XCTestExpectation?
     var feedbackSubmitted: XCTestExpectation?
     var feedbackReceived: XCTestExpectation?
+    var hintSubmitted: XCTestExpectation?
+    var hintReceived: XCTestExpectation?
 
     func onConnected() {
         connected?.fulfill()
@@ -135,6 +137,22 @@ class SocketServiceDelegateMock: SocketServiceDelegate {
         guard let exp = feedbackReceived else { return }
         if case .failure(_) = result {
             XCTAssert(false, "QuestionFeedbackReceived should succeed at parsing returned data")
+        }
+        exp.fulfill()
+    }
+    
+    func onQuestionHintSubmitted(_ result: SocketResult<HintSubmitted>){
+        guard let exp = hintSubmitted else { return }
+        if case .failure(_) = result {
+            XCTAssert(false, "QuestionHintReceived should succeed at parsing returned data")
+        }
+        exp.fulfill()
+    }
+    
+    func onQuestionHintReceived(_ result: SocketResult<HintReceived>){
+        guard let exp = hintReceived else { return }
+        if case .failure(_) = result {
+            XCTAssert(false, "QuestionHintReceived should succeed at parsing returned data")
         }
         exp.fulfill()
     }
